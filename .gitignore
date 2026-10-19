@@ -1,0 +1,27 @@
+# Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python cache & bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Data directories and datasets
+data/
+*.duckdb
+*.duckdb.wal
+
+# Environment variables & API keys
+.env
+.env.*
+!.env.example
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
