@@ -1,13 +1,11 @@
-# rag/chunk.py
 import pathlib
 from collections import defaultdict
 
-CHUNK_WORDS = 600      # target size of a chunk
-OVERLAP_WORDS = 100    # words repeated at the start of the next chunk
+CHUNK_WORDS = 300     
+OVERLAP_WORDS = 50    
 
 
 def save_chunk(buffer, ticker, chunks):
-    """Turn the lines in `buffer` into one chunk dictionary."""
     if buffer:
         text = "\n".join(buffer).strip()
         chunks.append({

@@ -1,0 +1,210 @@
+- id: d001
+  type: data
+  question: Which company had the highest revenue in fiscal 2023?
+  expected_sql: SELECT ticker FROM financials WHERE fiscal_year=2023 ORDER BY revenue DESC LIMIT 1
+  expected_result:
+  - - WMT
+- id: d002
+  type: data
+  question: What was Apple's revenue in 2023?
+  expected_sql: SELECT revenue FROM financials WHERE ticker='AAPL' AND fiscal_year=2023
+  expected_result:
+  - - 383285000000
+- id: d003
+  type: data
+  question: What was Microsoft's net income in 2022?
+  expected_sql: SELECT net_income FROM financials WHERE ticker='MSFT' AND fiscal_year=2022
+  expected_result:
+  - - 72738000000
+- id: d004
+  type: data
+  question: Which company had the highest operating margin in 2023?
+  expected_sql: SELECT ticker FROM ratios WHERE fiscal_year=2023 AND operating_margin IS NOT NULL ORDER BY operating_margin
+    DESC LIMIT 1
+  expected_result:
+  - - NVDA
+- id: d005
+  type: data
+  question: Which company had the highest net margin in 2024?
+  expected_sql: SELECT ticker FROM ratios WHERE fiscal_year=2024 ORDER BY net_margin DESC LIMIT 1
+  expected_result:
+  - - NVDA
+- id: d006
+  type: data
+  question: Which sector had the highest average net margin in 2023?
+  expected_sql: SELECT c.sector FROM ratios r JOIN companies c USING (ticker) WHERE r.fiscal_year=2023 GROUP BY c.sector ORDER
+    BY avg(r.net_margin) DESC LIMIT 1
+  expected_result:
+  - - Technology
+- id: d007
+  type: data
+  question: How many companies had revenue above 100 billion dollars in 2023?
+  expected_sql: SELECT count(*) FROM financials WHERE fiscal_year=2023 AND revenue > 100e9
+  expected_result:
+  - - 5
+- id: d008
+  type: data
+  question: Which company had the largest total assets in 2024?
+  expected_sql: SELECT ticker FROM financials WHERE fiscal_year=2024 ORDER BY total_assets DESC LIMIT 1
+  expected_result:
+  - - MSFT
+- id: d009
+  type: data
+  question: Which company had the smallest total assets in 2023?
+  expected_sql: SELECT ticker FROM financials WHERE fiscal_year=2023 ORDER BY total_assets ASC LIMIT 1
+  expected_result:
+  - - NVDA
+- id: d010
+  type: data
+  question: Which company generated the most operating cash flow in 2024?
+  expected_sql: SELECT ticker FROM financials WHERE fiscal_year=2024 ORDER BY operating_cash_flow DESC LIMIT 1
+  expected_result:
+  - - MSFT
+- id: d011
+  type: data
+  question: What was Apple's revenue growth from 2023 to 2024, in percent?
+  expected_sql: SELECT round((b.revenue/a.revenue-1)*100, 1) FROM financials a JOIN financials b ON a.ticker=b.ticker AND
+    b.fiscal_year=a.fiscal_year+1 WHERE a.ticker='AAPL' AND a.fiscal_year=2023
+  expected_result:
+  - - 2.0
+- id: d012
+  type: data
+  question: Which company had the highest revenue growth from 2022 to 2023, in percent?
+  expected_sql: SELECT a.ticker FROM financials a JOIN financials b ON a.ticker=b.ticker AND b.fiscal_year=a.fiscal_year+1
+    WHERE a.fiscal_year=2022 ORDER BY b.revenue/a.revenue DESC LIMIT 1
+  expected_result:
+  - - NVDA
+- id: d013
+  type: data
+  question: Which companies had lower net income in 2023 than in 2022?
+  expected_sql: SELECT a.ticker FROM financials a JOIN financials b ON a.ticker=b.ticker AND b.fiscal_year=a.fiscal_year+1
+    WHERE a.fiscal_year=2022 AND b.net_income < a.net_income ORDER BY a.ticker
+  expected_result:
+  - - AAPL
+  - - CVX
+  - - HD
+  - - MSFT
+  - - PFE
+  - - PG
+- id: d014
+  type: data
+  question: What was the total revenue of the Technology sector in 2023?
+  expected_sql: SELECT sum(f.revenue) FROM financials f JOIN companies c USING (ticker) WHERE c.sector='Technology' AND f.fiscal_year=2023
+  expected_result:
+  - - 656122000000
+- id: d015
+  type: data
+  question: What was the average revenue of Healthcare companies in 2022?
+  expected_sql: SELECT avg(f.revenue) FROM financials f JOIN companies c USING (ticker) WHERE c.sector='Healthcare' AND f.fiscal_year=2022
+  expected_result:
+  - - 90582500000.0
+- id: d016
+  type: data
+  question: Which companies do not report operating income?
+  expected_sql: SELECT ticker FROM financials GROUP BY ticker HAVING count(operating_income)=0 ORDER BY ticker
+  expected_result:
+  - - CVX
+  - - JNJ
+  - - PFE
+- id: d017
+  type: data
+  question: What was Johnson & Johnson's pretax margin in 2023, in percent?
+  expected_sql: SELECT round(pretax_margin*100, 1) FROM ratios WHERE ticker='JNJ' AND fiscal_year=2023
+  expected_result:
+  - - 17.7
+- id: d018
+  type: data
+  question: What was Coca-Cola's ratio of operating cash flow to net income in 2023?
+  expected_sql: SELECT round(operating_cash_flow/net_income, 2) FROM financials WHERE ticker='KO' AND fiscal_year=2023
+  expected_result:
+  - - 1.08
+- id: d019
+  type: data
+  question: Which company had the highest net income in 2021?
+  expected_sql: SELECT ticker FROM financials WHERE fiscal_year=2021 ORDER BY net_income DESC LIMIT 1
+  expected_result:
+  - - AAPL
+- id: d020
+  type: data
+  question: How many fiscal years of data do we have for Walmart?
+  expected_sql: SELECT count(*) FROM financials WHERE ticker='WMT'
+  expected_result:
+  - - 7
+- id: r001
+  type: docs
+  question: How does Apple describe its reliance on outsourcing partners and manufacturing in Asia?
+  company: AAPL
+  expected_evidence: outsourcing partners
+  note: pass if a retrieved chunk from this company's 10-K contains the evidence phrase
+- id: r002
+  type: docs
+  question: What were Apple's net sales by product category?
+  company: AAPL
+  expected_evidence: iPhone | 209,586
+  note: pass if a retrieved chunk from this company's 10-K contains the evidence phrase
+- id: r003
+  type: docs
+  question: What does Apple say about foreign currency exchange rate risk?
+  company: AAPL
+  expected_evidence: foreign currency
+  note: pass if a retrieved chunk from this company's 10-K contains the evidence phrase
+- id: r004
+  type: docs
+  question: What does Apple say about repurchasing its shares?
+  company: AAPL
+  expected_evidence: repurchase
+  note: pass if a retrieved chunk from this company's 10-K contains the evidence phrase
+- id: r005
+  type: docs
+  question: What does Apple say about tariffs and trade restrictions?
+  company: AAPL
+  expected_evidence: tariff
+  note: pass if a retrieved chunk from this company's 10-K contains the evidence phrase
+- id: r006
+  type: docs
+  question: What risks does Microsoft describe related to artificial intelligence?
+  company: MSFT
+  expected_evidence: artificial intelligence
+  note: pass if a retrieved chunk from this company's 10-K contains the evidence phrase
+- id: r007
+  type: docs
+  question: What cybersecurity risks does Microsoft disclose?
+  company: MSFT
+  expected_evidence: cyberattack
+  note: pass if a retrieved chunk from this company's 10-K contains the evidence phrase
+- id: r008
+  type: docs
+  question: What are Microsoft's reportable segments?
+  company: MSFT
+  expected_evidence: Productivity and Business Processes
+  note: pass if a retrieved chunk from this company's 10-K contains the evidence phrase
+- id: r009
+  type: docs
+  question: How does Microsoft describe its Azure cloud business and competition?
+  company: MSFT
+  expected_evidence: Azure
+  note: pass if a retrieved chunk from this company's 10-K contains the evidence phrase
+- id: r010
+  type: docs
+  question: What litigation risk does Johnson & Johnson describe regarding talc?
+  company: JNJ
+  expected_evidence: talc
+  note: pass if a retrieved chunk from this company's 10-K contains the evidence phrase
+- id: r011
+  type: docs
+  question: What does J&J say about Stelara biosimilar competition?
+  company: JNJ
+  expected_evidence: STELARA
+  note: pass if a retrieved chunk from this company's 10-K contains the evidence phrase
+- id: r012
+  type: docs
+  question: What are Johnson & Johnson's business segments?
+  company: JNJ
+  expected_evidence: Innovative Medicine
+  note: pass if a retrieved chunk from this company's 10-K contains the evidence phrase
+- id: r013
+  type: docs
+  question: How does the Inflation Reduction Act affect Johnson & Johnson?
+  company: JNJ
+  expected_evidence: Inflation Reduction Act
+  note: pass if a retrieved chunk from this company's 10-K contains the evidence phrase
