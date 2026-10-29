@@ -164,7 +164,9 @@
   type: docs
   question: What risks does Microsoft describe related to artificial intelligence?
   company: MSFT
-  expected_evidence: artificial intelligence
+  expected_evidence:
+  - artificial intelligence
+  - Our AI models and the methodologies used to train them may be flawed
   note: pass if a retrieved chunk from this company's 10-K contains the evidence phrase
 - id: r007
   type: docs

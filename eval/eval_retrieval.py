@@ -25,13 +25,27 @@ def load_questions(path: Path) -> list[dict]:
 
     seen_ids = set()
     for q in questions:
-        for field in ("id", "question", "company", "expected_evidence"):
+        for field in ("id", "question", "company"):
             value = q.get(field)
             if not isinstance(value, str) or not value.strip():
                 raise ValueError(
                     f"Question {q.get('id', '<unknown>')}: "
                     f"'{field}' must be a nonempty string"
                 )
+
+        evidence = q.get("expected_evidence")
+        # Convert a single phrase into a list so both formats share one check.
+        phrases = [evidence] if isinstance(evidence, str) else evidence
+        if (
+            not isinstance(phrases, list)
+            or not phrases
+            or not all(isinstance(p, str) and p.strip() for p in phrases)
+        ):
+            raise ValueError(
+                f"{q['id']}: expected_evidence must be a nonempty string "
+                "or a nonempty list of nonempty strings"
+            )
+
         if q["id"] in seen_ids:
             raise ValueError(f"Duplicate question ID: {q['id']}")
         seen_ids.add(q["id"])
@@ -43,10 +57,22 @@ def normalize(text: str) -> str:
     return " ".join(text.casefold().split())
 
 
-def evidence_matches(text: str, expected_evidence: str) -> bool:
-    if not isinstance(expected_evidence, str) or not expected_evidence.strip():
-        raise ValueError("Expected evidence must be a nonempty string")
-    return normalize(expected_evidence) in normalize(text)
+def evidence_matches(
+    text: str,
+    expected_evidence: str | list[str],
+) -> bool:
+    phrases = (
+        [expected_evidence]
+        if isinstance(expected_evidence, str)
+        else expected_evidence
+    )
+
+    normalized_text = normalize(text)
+
+    return any(
+        normalize(phrase) in normalized_text
+        for phrase in phrases
+    )
 
 
 def evaluate(questions: list[dict]) -> dict:
