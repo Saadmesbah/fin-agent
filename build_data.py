@@ -66,7 +66,19 @@ def fetch_missing():
         time.sleep(0.2)  # SEC limit: 10 requests/second
 
 
-def extract_annual(facts, tags, unit="USD"):
+def fiscal_year_for(ticker: str, end: date) -> int:
+    """Map period ends to fiscal-year labels for the current company set.
+
+    Home Depot names January/February year-ends after the previous year.
+    Walmart and NVIDIA name those periods after the ending calendar year.
+    Review this policy when adding companies or changing historical coverage.
+    """
+    if ticker == "HD" and end.month <= 2:
+        return end.year - 1
+    return end.year
+
+
+def extract_annual(facts, tags, ticker: str, unit="USD"):
     """{fiscal_year: (value, tag_used)} from annual 10-K data only."""
     gaap = facts["facts"].get("us-gaap", {})
     result = {}
@@ -84,7 +96,7 @@ def extract_annual(facts, tags, unit="USD"):
             if end not in best or e["filed"] > best[end]["filed"]:
                 best[end] = e
         for end, e in best.items():
-            fy = end.year - 1 if end.month <= 2 else end.year  # Jan year-ends
+            fy = fiscal_year_for(ticker, end)
             result.setdefault(fy, (e["val"], tag))
     return result
 
@@ -97,12 +109,12 @@ def build():
             report.append(f"SKIPPED {t}: raw file missing")
             continue
         facts = json.loads(p.read_text())
-        n_assets = len(extract_annual(facts, TAGS["total_assets"]))
+        n_assets = len(extract_annual(facts, TAGS["total_assets"], ticker=t))
         if p.stat().st_size < 1_000_000 or n_assets < 4:
             report.append(f"EXCLUDED {t} ({facts.get('entityName')}): file {p.stat().st_size} bytes, "
                           f"{n_assets} annual total_assets -> wrong/incomplete SEC entity")
             continue
-        per = {m: extract_annual(facts, tg) for m, tg in TAGS.items()}
+        per = {m: extract_annual(facts, tg, ticker=t) for m, tg in TAGS.items()}
         companies.append({"ticker": t, "name": facts["entityName"],
                           "cik": facts["cik"], "sector": sector})
         years = {y for v in per.values() for y in v if y >= MIN_YEAR}
