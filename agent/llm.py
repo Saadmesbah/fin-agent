@@ -9,6 +9,10 @@ from dotenv import load_dotenv
 ROOT = Path(__file__).resolve().parents[1]
 
 
+class ProviderRateLimitError(RuntimeError):
+    """The provider cannot currently accept requests for the configured model."""
+
+
 def complete(system: str, prompt: str, max_tokens: int = 2000) -> dict:
     load_dotenv(ROOT / ".env", encoding="utf-8-sig")
     key = os.getenv("OPENROUTER_API_KEY", "").strip()
@@ -27,6 +31,12 @@ def complete(system: str, prompt: str, max_tokens: int = 2000) -> dict:
         )
     except requests.RequestException:
         raise RuntimeError("OpenRouter connection failed or timed out") from None
+    if response.status_code == 429:
+        raise ProviderRateLimitError(
+            "OpenRouter HTTP 429: the configured model is rate limited. "
+            "Try again when its quota resets, or configure another available model "
+            "in OPENROUTER_MODEL. The data is ready, but a live answer requires the provider."
+        )
     if not response.ok:
         raise RuntimeError(f"OpenRouter HTTP {response.status_code}; check model, key, credits or rate limit")
     try:

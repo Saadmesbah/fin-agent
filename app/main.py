@@ -9,7 +9,7 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
 from agent.graph import ask
-from agent.llm import ROOT
+from agent.llm import ROOT, ProviderRateLimitError
 
 # Qdrant local mode is single-process. Bound work to avoid competing model loads.
 _request_lock = threading.Lock()
@@ -58,6 +58,8 @@ def ask_question(body: Question):
         raise HTTPException(422, str(exc)) from None
     except FileNotFoundError:
         raise HTTPException(503, "Required data is missing; run the data preparation commands") from None
+    except ProviderRateLimitError as exc:
+        raise HTTPException(429, str(exc)) from None
     except RuntimeError as exc:
         raise HTTPException(502, str(exc)) from None
     except duckdb.Error:

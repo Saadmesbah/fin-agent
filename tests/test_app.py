@@ -51,3 +51,15 @@ def test_api_health_validation_and_error(monkeypatch):
         assert client.post("/ask", json={"question": "q"}).status_code == 422
         monkeypatch.setattr(api, "ask", lambda *a: {"answer": "ok", "sources": [], "route": "sql"})
         assert client.post("/ask", json={"question": "q"}).json()["answer"] == "ok"
+
+
+def test_provider_rate_limit_is_reported_as_429(monkeypatch):
+    import app.main as api
+    from agent.llm import ProviderRateLimitError
+    def limited(*args):
+        raise ProviderRateLimitError("OpenRouter HTTP 429: model quota unavailable")
+    monkeypatch.setattr(api, "ask", limited)
+    with TestClient(app) as client:
+        response = client.post("/ask", json={"question": "q"})
+        assert response.status_code == 429
+        assert "quota" in response.json()["detail"]
