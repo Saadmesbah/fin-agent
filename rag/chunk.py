@@ -8,6 +8,8 @@ OVERLAP_WORDS = 50
 def save_chunk(buffer, ticker, chunks):
     if buffer:
         text = "\n".join(buffer).strip()
+        if not text:
+            return
         chunks.append({
             "ticker": ticker,
             "chunk_id": len(chunks),   # 0, 1, 2... within one company

@@ -15,13 +15,13 @@ import argparse
 import json
 import pathlib
 import time
+import os
 from datetime import date
 
 import pandas as pd
 
 RAW = pathlib.Path("data/raw")
 OUT = pathlib.Path("data/processed")
-HEADERS = {"User-Agent": "Saad Mesbah saad.mesbah@esi.ac.ma"}  # SEC requires this
 
 COMPANIES = {
     "AAPL": "Technology", "MSFT": "Technology", "NVDA": "Technology",
@@ -51,8 +51,15 @@ MIN_YEAR = 2019
 
 def fetch_missing():
     import requests
-    ciks = {str(v["ticker"]): str(v["cik_str"]).zfill(10) for v in requests.get(
-        "https://www.sec.gov/files/company_tickers.json", headers=HEADERS).json().values()}
+    from dotenv import load_dotenv
+    load_dotenv(encoding="utf-8-sig")
+    name, email = os.getenv("SEC_NAME", ""), os.getenv("SEC_EMAIL", "")
+    if not name or "@" not in email:
+        raise ValueError("Set SEC_NAME and SEC_EMAIL in .env for SEC downloads")
+    headers = {"User-Agent": f"{name} {email}"}
+    tickers = requests.get("https://www.sec.gov/files/company_tickers.json", headers=headers, timeout=30)
+    tickers.raise_for_status()
+    ciks = {str(v["ticker"]): str(v["cik_str"]).zfill(10) for v in tickers.json().values()}
     RAW.mkdir(parents=True, exist_ok=True)
     for t in COMPANIES:
         p = RAW / f"{t}.json"
@@ -60,8 +67,10 @@ def fetch_missing():
             continue
         cik = CIK_OVERRIDES.get(t, ciks[t])
         r = requests.get(f"https://data.sec.gov/api/xbrl/companyfacts/CIK{cik}.json",
-                         headers=HEADERS)
-        p.write_text(r.text)
+                         headers=headers, timeout=30)
+        r.raise_for_status()
+        r.json()  # Reject an HTML error page before replacing cached source data.
+        p.write_text(r.text, encoding="utf-8")
         print("downloaded", t, cik, len(r.text))
         time.sleep(0.2)  # SEC limit: 10 requests/second
 
@@ -69,11 +78,11 @@ def fetch_missing():
 def fiscal_year_for(ticker: str, end: date) -> int:
     """Map period ends to fiscal-year labels for the current company set.
 
-    Home Depot names January/February year-ends after the previous year.
+    Home Depot and JNJ name early-calendar-year ends after the previous year.
     Walmart and NVIDIA name those periods after the ending calendar year.
     Review this policy when adding companies or changing historical coverage.
     """
-    if ticker == "HD" and end.month <= 2:
+    if ticker not in {"WMT", "NVDA"} and end.month <= 2:
         return end.year - 1
     return end.year
 
@@ -141,6 +150,8 @@ def main():
         fetch_missing()
     OUT.mkdir(parents=True, exist_ok=True)
     comp, fin, report = build()
+    if comp.empty or fin.empty:
+        raise ValueError("No financial data found; existing outputs were not replaced")
     fin.to_csv(OUT / "financials.csv", index=False)
 
     import duckdb
@@ -152,15 +163,16 @@ def main():
     con.execute("""
         CREATE OR REPLACE VIEW ratios AS
         SELECT ticker, fiscal_year,
-               operating_income / revenue AS operating_margin,
-               net_income / revenue       AS net_margin,
-               pretax_income / revenue    AS pretax_margin
+               operating_income / NULLIF(revenue, 0) AS operating_margin,
+               net_income / NULLIF(revenue, 0)       AS net_margin,
+               pretax_income / NULLIF(revenue, 0)    AS pretax_margin
         FROM financials""")
     (OUT / "data_quality.txt").write_text("\n".join(report))
     print(f"{len(comp)} companies, {len(fin)} rows")
     print("\n".join(report))
     print(con.sql("""SELECT ticker, min(fiscal_year) AS first, max(fiscal_year) AS last,
                      count(*) AS n FROM financials GROUP BY 1 ORDER BY 1""").df())
+    con.close()
 
 
 if __name__ == "__main__":

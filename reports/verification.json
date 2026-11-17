@@ -1,0 +1,20 @@
+{
+  "timestamp_utc": "2026-11-17T02:47:43.353587+00:00",
+  "windows": {
+    "tests": 50,
+    "failures": 0,
+    "errors": 0,
+    "seconds": 13.56
+  },
+  "docker_linux": {
+    "tests": 50,
+    "failures": 0,
+    "seconds": 8.38,
+    "reference_sql_passed": 20,
+    "reference_sql_total": 20,
+    "image_build": "passed",
+    "health_http": 200,
+    "docker_health": "healthy"
+  },
+  "notes": "Docker health was tested without mounted data; readiness correctly reported false."
+}

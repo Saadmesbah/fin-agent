@@ -1,0 +1,203 @@
+{
+  "total": 13,
+  "hits": {
+    "1": 13,
+    "3": 13,
+    "5": 13
+  },
+  "scores": {
+    "1": 1.0,
+    "3": 1.0,
+    "5": 1.0
+  },
+  "questions": [
+    {
+      "id": "r001",
+      "question": "How does Apple describe its reliance on outsourcing partners and manufacturing in Asia?",
+      "company": "AAPL",
+      "expected_evidence": "outsourcing partners",
+      "first_rank": 1,
+      "retrieved_chunk_ids": [
+        39,
+        164,
+        40,
+        38,
+        28
+      ]
+    },
+    {
+      "id": "r002",
+      "question": "What were Apple's net sales by product category?",
+      "company": "AAPL",
+      "expected_evidence": "iPhone | 209,586",
+      "first_rank": 1,
+      "retrieved_chunk_ids": [
+        112,
+        139,
+        111,
+        138,
+        11
+      ]
+    },
+    {
+      "id": "r003",
+      "question": "What does Apple say about foreign currency exchange rate risk?",
+      "company": "AAPL",
+      "expected_evidence": "foreign currency",
+      "first_rank": 1,
+      "retrieved_chunk_ids": [
+        125,
+        85,
+        124,
+        122,
+        146
+      ]
+    },
+    {
+      "id": "r004",
+      "question": "What does Apple say about repurchasing its shares?",
+      "company": "AAPL",
+      "expected_evidence": "repurchase",
+      "first_rank": 1,
+      "retrieved_chunk_ids": [
+        158,
+        91,
+        117,
+        103,
+        129
+      ]
+    },
+    {
+      "id": "r005",
+      "question": "What does Apple say about tariffs and trade restrictions?",
+      "company": "AAPL",
+      "expected_evidence": "tariff",
+      "first_rank": 1,
+      "retrieved_chunk_ids": [
+        28,
+        107,
+        27,
+        82,
+        108
+      ]
+    },
+    {
+      "id": "r006",
+      "question": "What risks does Microsoft describe related to artificial intelligence?",
+      "company": "MSFT",
+      "expected_evidence": [
+        "artificial intelligence",
+        "Our AI models and the methodologies used to train them may be flawed"
+      ],
+      "first_rank": 1,
+      "retrieved_chunk_ids": [
+        146,
+        144,
+        84,
+        6,
+        5
+      ]
+    },
+    {
+      "id": "r007",
+      "question": "What cybersecurity risks does Microsoft disclose?",
+      "company": "MSFT",
+      "expected_evidence": "cyberattack",
+      "first_rank": 1,
+      "retrieved_chunk_ids": [
+        65,
+        138,
+        134,
+        139,
+        69
+      ]
+    },
+    {
+      "id": "r008",
+      "question": "What are Microsoft's reportable segments?",
+      "company": "MSFT",
+      "expected_evidence": "Productivity and Business Processes",
+      "first_rank": 1,
+      "retrieved_chunk_ids": [
+        150,
+        264,
+        11,
+        269,
+        266
+      ]
+    },
+    {
+      "id": "r009",
+      "question": "How does Microsoft describe its Azure cloud business and competition?",
+      "company": "MSFT",
+      "expected_evidence": "Azure",
+      "first_rank": 1,
+      "retrieved_chunk_ids": [
+        19,
+        18,
+        16,
+        145,
+        54
+      ]
+    },
+    {
+      "id": "r010",
+      "question": "What litigation risk does Johnson & Johnson describe regarding talc?",
+      "company": "JNJ",
+      "expected_evidence": "talc",
+      "first_rank": 1,
+      "retrieved_chunk_ids": [
+        61,
+        62,
+        362,
+        291,
+        290
+      ]
+    },
+    {
+      "id": "r011",
+      "question": "What does J&J say about Stelara biosimilar competition?",
+      "company": "JNJ",
+      "expected_evidence": "STELARA",
+      "first_rank": 1,
+      "retrieved_chunk_ids": [
+        115,
+        341,
+        340,
+        24,
+        114
+      ]
+    },
+    {
+      "id": "r012",
+      "question": "What are Johnson & Johnson's business segments?",
+      "company": "JNJ",
+      "expected_evidence": "Innovative Medicine",
+      "first_rank": 1,
+      "retrieved_chunk_ids": [
+        105,
+        13,
+        104,
+        62,
+        61
+      ]
+    },
+    {
+      "id": "r013",
+      "question": "How does the Inflation Reduction Act affect Johnson & Johnson?",
+      "company": "JNJ",
+      "expected_evidence": "Inflation Reduction Act",
+      "first_rank": 1,
+      "retrieved_chunk_ids": [
+        33,
+        62,
+        12,
+        61,
+        57
+      ]
+    }
+  ],
+  "misses": [],
+  "mode": "rerank",
+  "benchmark_sha256": "839612d8db3056e5dcb040551b0656a2277ec1eac8af6e1e4d686447a0c5a60d"
+}

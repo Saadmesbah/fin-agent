@@ -1,0 +1,38 @@
+{
+  "description": "Small public SEC-derived numeric snapshot for offline regression tests; not live LLM accuracy.",
+  "files": {
+    "tests\\fixtures\\companies.csv": "0027589544e2ebccd2fd52805d2e105fbb3d1160bfa56842c01fb33ad30c7a4e",
+    "tests\\fixtures\\financials.csv": "13843f3cbcf8ced71716f1daa7be221ce5b37b208ce6b8dedf882a854dace1ca"
+  },
+  "raw_sha256": {
+    "AAPL.json": "6b4380f07cf6045408be419cf7d78a5d90d08c28cb86fef6c78c7105622fd784",
+    "CAT.json": "04a0cc75f751c22fcc76367b4bb5545674b88774ce6c44d6371e254944767660",
+    "CVX.json": "8fbf61c940b2c65b847cbd7f553f305b2460a90b4ffb1ff80683eefb4678ac96",
+    "HD.json": "c06002e38e2ec90633a86e54404ce2013eb997141af1e320bb674b3b6fcd902c",
+    "JNJ.json": "6f7f1851abba49686f9f4f385ab03c211436b4b6cc7a8a24790d983ebac63f52",
+    "KO.json": "b903ffdb93bd0cacedcf17c30aed679f60e52ebcfef85619197ae4ace1b3fbb6",
+    "MSFT.json": "2d0ede621e10977a5aa7398bdde14b1a2d2b82fac46066a4bcceb0a26b67c0c5",
+    "NVDA.json": "a7cf2857c67726f1627299e0e7533670272e37349da086efaebeb5b8a6c7970d",
+    "PFE.json": "8c273cb9fb49b7e2e406cd9047f7514ebc4906ed41455d286ab56538a8dccb54",
+    "PG.json": "e340f0bead5eb9e2eeb54587b2c46ec0098d651f5e27f298c57fc839ead9de18",
+    "WMT.json": "dba615b212adc198591c6a814960e696033e33b99ba6ec2be569dedd9b6479fd",
+    "XOM.json": "170e38ec5b65371c5b570168e355f70f9c453d71a5293f57444e81a88f9db430"
+  },
+  "text_sha256": {
+    "AAPL_10k.txt": "1c4361be3797e27c9e13e57e503f9edd3e740b7c3d0ce15becb5e877aeefb04f",
+    "JNJ_10k.txt": "c4936a9a8a043d855aa020465e532f1968dc1e45f6ead2350da24ff3609163c5",
+    "MSFT_10k.txt": "67e96fb5cf29eaf41518dbe99547b520e31ee5c02b0439c4561d74ac5a9370c9"
+  },
+  "benchmark_sha256": "839612d8db3056e5dcb040551b0656a2277ec1eac8af6e1e4d686447a0c5a60d",
+  "document_accessions": {
+    "AAPL": [
+      "0000320193-25-000079"
+    ],
+    "MSFT": [
+      "0001193125-26-323660"
+    ],
+    "JNJ": [
+      "0000200406-26-000016"
+    ]
+  }
+}

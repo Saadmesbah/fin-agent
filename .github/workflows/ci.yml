@@ -1,0 +1,49 @@
+name: Tests and evaluations
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    env:
+      HF_HUB_OFFLINE: "1"
+      TRANSFORMERS_OFFLINE: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install CPU dependencies
+        run: |
+          python -m pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r requirements.txt
+      - name: Offline regression tests
+        run: python -m pytest --junitxml=ci-results/tests.xml
+      - name: SQL reference evaluation on public snapshot
+        run: |
+          python -m tests.build_fixture
+          python -m eval.eval_sql --output ci-results/sql_reference.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: offline-evaluation-results
+          path: ci-results/
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t fin-agent:test .
+      - name: Health smoke test
+        run: |
+          docker run -d --name fin-agent -p 8000:8000 fin-agent:test
+          for i in $(seq 1 30); do
+            if curl --fail http://localhost:8000/health; then exit 0; fi
+            sleep 2
+          done
+          docker logs fin-agent
+          exit 1

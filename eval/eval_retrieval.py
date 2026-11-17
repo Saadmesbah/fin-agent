@@ -4,8 +4,11 @@ Run from the project root:
     .\.venv\Scripts\python.exe -m eval.eval_retrieval
 """
 from pathlib import Path
+import argparse
+import hashlib
+import json
 import yaml
-from rag.index import search
+from rag.retrieve import retrieve
 
 BENCHMARK_PATH = Path("eval/benchmark.yaml")
 KS = (1, 3, 5)
@@ -75,14 +78,14 @@ def evidence_matches(
     )
 
 
-def evaluate(questions: list[dict]) -> dict:
+def evaluate(questions: list[dict], mode: str = "vector") -> dict:
     if not questions:
         raise ValueError("Cannot evaluate an empty question set")
     hits = {k: 0 for k in KS}
     rows = []
 
     for q in questions:
-        results = search(q["question"], k=max(KS), ticker=q["company"])
+        results = retrieve(q["question"], k=max(KS), ticker=q["company"], mode=mode)
 
         # A broken company filter or duplicate results invalidate the run.
         seen_chunks = set()
@@ -121,12 +124,21 @@ def evaluate(questions: list[dict]) -> dict:
         "scores": {k: hits[k] / total for k in KS},
         "questions": rows,
         "misses": [row for row in rows if row["first_rank"] is None],
+        "mode": mode,
+        "benchmark_sha256": hashlib.sha256(BENCHMARK_PATH.read_bytes()).hexdigest(),
     }
 
 
 def main():
-    report = evaluate(load_questions(BENCHMARK_PATH))
-    print("\nVector-only retrieval with a supplied company filter")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--mode", choices=["vector", "hybrid", "rerank"], default="vector")
+    parser.add_argument("--output", type=Path)
+    args = parser.parse_args()
+    report = evaluate(load_questions(BENCHMARK_PATH), args.mode)
+    if args.output:
+        args.output.parent.mkdir(exist_ok=True, parents=True)
+        args.output.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    print(f"\n{args.mode} retrieval with a supplied company filter")
     print("Matching: case-insensitive, whitespace-normalized substring")
     for k in KS:
         print(

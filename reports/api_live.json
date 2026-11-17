@@ -1,0 +1,390 @@
+[
+  {
+    "question": "What was Apple's revenue in 2023?",
+    "expected_route": "sql",
+    "passed": true,
+    "status": 200,
+    "seconds": 3.86,
+    "response": {
+      "question": "What was Apple's revenue in 2023?",
+      "ticker": "AAPL",
+      "route": "sql",
+      "retrieval_mode": "vector",
+      "sql_result": {
+        "sql": "SELECT revenue FROM financials WHERE ticker = 'AAPL' AND fiscal_year = 2023",
+        "columns": [
+          "revenue"
+        ],
+        "rows": [
+          [
+            383285000000
+          ]
+        ],
+        "model": "nvidia/nemotron-3.5-super-vl:free",
+        "usage": {
+          "prompt_tokens": 623,
+          "completion_tokens": 199,
+          "total_tokens": 822,
+          "cost": 0,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0,
+            "upstream_inference_prompt_cost": 0,
+            "upstream_inference_completions_cost": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 168,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "answer": "{\"columns\": [\"revenue\"], \"rows\": [[383285000000]]}",
+        "sources": [
+          {
+            "label": "DuckDB",
+            "tables": [
+              "companies",
+              "financials",
+              "ratios"
+            ],
+            "sql": "SELECT revenue FROM financials WHERE ticker = 'AAPL' AND fiscal_year = 2023"
+          }
+        ]
+      },
+      "answer": "Structured data:\n{\"columns\": [\"revenue\"], \"rows\": [[383285000000]]}",
+      "sources": [
+        {
+          "label": "DuckDB",
+          "tables": [
+            "companies",
+            "financials",
+            "ratios"
+          ],
+          "sql": "SELECT revenue FROM financials WHERE ticker = 'AAPL' AND fiscal_year = 2023"
+        }
+      ]
+    }
+  },
+  {
+    "question": "What are Microsoft's reportable segments?",
+    "expected_route": "rag",
+    "passed": true,
+    "status": 200,
+    "seconds": 20.85,
+    "response": {
+      "question": "What are Microsoft's reportable segments?",
+      "ticker": "MSFT",
+      "route": "rag",
+      "retrieval_mode": "vector",
+      "rag_result": {
+        "answer": "Microsoft's reportable segments are Productivity and Business Processes, Intelligent Cloud, and More Personal Computing [MSFT:11][MSFT:264][MSFT:150].",
+        "sources": [
+          {
+            "score": 0.7635433145096933,
+            "ticker": "MSFT",
+            "chunk_id": 11,
+            "text": "Microsoft is committed to sustainability and our approach to addressing climate change starts with the sustainability of our own business. In 2020, we announced goals to become a carbon negative, water positive, and zero waste company by 2030. Since announcing these goals, we have seen major changes in both the technology sector and in our understanding of what it will take to meet our goals. More information about our progress toward these goals can be found in our annual Environmental Sustainability Report.\nOPERATING SEGMENTS\nWe operate our business and report our financial performance using three segments: Productivity and Business Processes, Intelligent Cloud, and More Personal Computing. Our segments provide management with a comprehensive financial view of our key businesses. The segments enable the alignment of strategies and objectives across the development, sales, marketing, and services organizations, and they provide a framework for timely and rational allocation of resources within businesses.\nAdditional information on our operating segments and geographic and product information is contained in Note 18 \u2013 Segment Information and Geographic Data of the Notes to Financial Statements (Part II, Item 8 of this Form 10-K).\nOur reportable segments are described below.\nProductivity and Business Processes\nOur Productivity and Business Processes segment consists of products and services in our portfolio of productivity, communication, and information services, spanning a variety of devices and platforms. This segment primarily comprises:\n\u2022\nMicrosoft 365 Commercial products and cloud services, including Microsoft 365 Commercial cloud, comprising Microsoft 365 Commercial, Enterprise Mobility + Security, the cloud portion of Windows Commercial, the per-user portion of Power BI, Exchange, SharePoint, Microsoft Teams, Microsoft 365 Security and Compliance, and Microsoft 365 Copilot; and Microsoft 365 Commercial products, comprising Windows Commercial on-premises and Office licensed on-premises.\n\u2022",
+            "n_words": 287,
+            "label": "[MSFT:11]"
+          },
+          {
+            "score": 0.7612831686379492,
+            "ticker": "MSFT",
+            "chunk_id": 264,
+            "text": "SEGMENT INFORMATION AND GEOGRAPHIC DATA\nIn its operation of the business, management, including our chief operating decision maker (\u201cCODM\u201d), who is also our\nChief Executive Officer\n, reviews certain financial information, including segmented internal profit and loss statements. The primary profitability measure used by the CODM to review segment operating results is operating income.\nThe CODM uses operating income to allocate resources during our annual planning process and throughout the year, as well as to assess the performance of our segments, primarily by monitoring actual results compared to prior periods and expected results.\nDuring the periods presented, we reported our financial performance based on the following\nthree\nsegments: Productivity and Business Processes, Intelligent Cloud, and More Personal Computing.\nOur reportable segments are described below.\nProductivity and Business Processes\nOur Productivity and Business Processes segment consists of products and services in our portfolio of productivity, communication, and information services, spanning a variety of devices and platforms. This segment primarily comprises:\n\u2022\nMicrosoft 365 Commercial products and cloud services, including Microsoft 365 Commercial cloud, comprising Microsoft 365 Commercial, Enterprise Mobility + Security, the cloud portion of Windows Commercial, the per-user portion of Power BI, Exchange, SharePoint, Microsoft Teams, Microsoft 365 Security and Compliance, and Microsoft 365 Copilot; and Microsoft 365 Commercial products, comprising Windows Commercial on-premises and Office licensed on-premises.\n\u2022\nMicrosoft 365 Consumer products and cloud services, including Microsoft 365 Consumer subscriptions, Office licensed on-premises, and other consumer services.\n\u2022\nLinkedIn, including Talent Solutions, Marketing Solutions, Premium Subscriptions, and Sales Solutions.\n\u2022\nDynamics products and cloud services, including Dynamics 365, comprising a set of intelligent, cloud-based applications across ERP, CRM, Power Apps, and Power Automate; and on-premises ERP and CRM applications.\nIntelligent Cloud",
+            "n_words": 282,
+            "label": "[MSFT:264]"
+          },
+          {
+            "score": 0.7150459241958854,
+            "ticker": "MSFT",
+            "chunk_id": 150,
+            "text": "We report our financial performance based on the following three segments: Productivity and Business Processes, Intelligent Cloud, and More Personal Computing. The segment amounts included in MD&A are presented on a basis consistent with our internal management reporting.\nAdditional information on our reportable segments is contained in Note 18 \u2013 Segment Information and Geographic Data of the Notes to Financial Statements (Part II, Item 8 of this Form 10-K).\n35\nPART II\nItem 7\nMetrics\nWe use metrics in assessing the performance of our business and to make informed decisions regarding the allocation of resources. We disclose metrics to enable investors to evaluate progress against our ambitions, provide transparency into performance trends, and reflect the continued evolution of our products and services. Our commercial and other business metrics are fundamentally connected based on how customers use our products and services. The metrics are disclosed in the MD&A or the Notes to Financial Statements (Part II, Item 8 of this Form 10-K). Financial metrics are calculated based on financial results prepared in accordance with accounting principles generally accepted in the United States of America (\u201cGAAP\u201d), and growth comparisons relate to the corresponding period of last fiscal year.\nIn the first quarter of fiscal year 2026, we made updates to our metrics to align with how we manage and monitor certain businesses. As part of these updates, Microsoft 365 Consumer subscribers was removed as a metric.\nCommercial\nOur commercial business primarily consists of Server products and cloud services, Microsoft 365 Commercial products and cloud services, the commercial portion of LinkedIn, Dynamics products and cloud services, and Enterprise and partner services. Our commercial metrics allow management and investors to assess the overall health of our commercial business and include leading indicators of future performance.",
+            "n_words": 291,
+            "label": "[MSFT:150]"
+          },
+          {
+            "score": 0.6879000042281647,
+            "ticker": "MSFT",
+            "chunk_id": 266,
+            "text": "XBOX (formerly Gaming), including XBOX hardware and XBOX content and services, comprising first- and third-party content (including games and in-game content), XBOX Game Pass and other subscriptions, XBOX Cloud Gaming, advertising, and other cloud services.\n\u2022\nSearch advertising (formerly Search and news advertising), comprising Bing, Copilot, Microsoft News, Microsoft Edge, and third-party affiliates.\n83\nPART II\nItem 8\nRevenue and costs are generally directly attributed to our segments. However, due to the integrated structure of our business, certain revenue recognized and costs incurred by one segment may benefit other segments. Revenue from certain contracts is allocated among the segments based on the relative value of the underlying products and services, which can include allocation based on actual prices charged, prices when sold separately, or estimated costs plus a profit margin. Cost of revenue is allocated in certain cases based on a relative revenue methodology. Operating expenses that are allocated primarily include those relating to our investments in AI infrastructure and training, as well as marketing of products and services, from which multiple segments benefit and are generally allocated based on relative gross margin.\nIn addition, certain costs are incurred at a corporate level and allocated to our segments. These allocated costs generally include legal, including settlements and fines, information technology, human resources, finance, excise taxes, field selling, shared facilities services, customer service and support, and severance incurred as part of a corporate program. Each allocation is measured differently based on the specific facts and circumstances of the costs being allocated and is generally based on relative gross margin or relative headcount.\nSegment revenue, cost of revenue, operating expenses, and operating income were as follows during the periods presented:\n(In millions)\nYear Ended June 30, | 2026 | 2025 | 2024\nProductivity and Business Processes",
+            "n_words": 294,
+            "label": "[MSFT:266]"
+          },
+          {
+            "score": 0.6809403055980643,
+            "ticker": "MSFT",
+            "chunk_id": 269,
+            "text": "Enterprise and partner services | 8,260 | 7,760 | 7,594\nOther | 109 | 72 | 45\nTotal | 331,839 | 281,724 | 245,122\nOur Microsoft Cloud revenue, which includes Microsoft 365 Commercial cloud, Azure and other cloud services, the commercial portion of LinkedIn, and Dynamics 365, was $\n214.4\nbillion, $\n168.9\nbillion, and $\n137.7\nbillion in fiscal years 2026, 2025, and 2024, respectively. These amounts are included in Server products and cloud services, Microsoft 365 Commercial products and cloud services, LinkedIn, and Dynamics products and cloud services in the table above.\nAssets are not allocated to segments for internal reporting presentations. A portion of amortization and depreciation is included with various other costs in an overhead allocation to each segment. It is impracticable for us to separately identify the amount of amortization and depreciation by segment that is included in the measure of segment profit or loss.\nLong-lived assets, excluding financial instruments and tax assets, classified by the location of the controlling statutory company and with countries over 10% of the total shown separately, were as follows:\n(In millions)\nJune 30, | 2026 | 2025 | 2024\nUnited States | 300,354 | 230,069 | 186,106\nOther countries | 175,159 | 141,833 | 115,263\nTotal | 475,513 | 371,902 | 301,369\n85\nPART II\nItem 8\nREPORT OF INDEPENDENT REGIST\nERED PUBLIC ACCOUNTING FIRM\nTo the Stockholders and the Board of Directors of Microsoft Corporation\nOpinion on the Financial Statements",
+            "n_words": 242,
+            "label": "[MSFT:269]"
+          }
+        ],
+        "citations": [
+          "[MSFT:11]",
+          "[MSFT:150]",
+          "[MSFT:264]"
+        ],
+        "model": "nvidia/nemotron-3.5-super-vl:free",
+        "usage": {
+          "prompt_tokens": 2252,
+          "completion_tokens": 262,
+          "total_tokens": 2514,
+          "cost": 0,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0,
+            "upstream_inference_prompt_cost": 0,
+            "upstream_inference_completions_cost": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 219,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      },
+      "answer": "Filing evidence:\nMicrosoft's reportable segments are Productivity and Business Processes, Intelligent Cloud, and More Personal Computing [MSFT:11][MSFT:264][MSFT:150].",
+      "sources": [
+        {
+          "score": 0.7635433145096933,
+          "ticker": "MSFT",
+          "chunk_id": 11,
+          "text": "Microsoft is committed to sustainability and our approach to addressing climate change starts with the sustainability of our own business. In 2020, we announced goals to become a carbon negative, water positive, and zero waste company by 2030. Since announcing these goals, we have seen major changes in both the technology sector and in our understanding of what it will take to meet our goals. More information about our progress toward these goals can be found in our annual Environmental Sustainability Report.\nOPERATING SEGMENTS\nWe operate our business and report our financial performance using three segments: Productivity and Business Processes, Intelligent Cloud, and More Personal Computing. Our segments provide management with a comprehensive financial view of our key businesses. The segments enable the alignment of strategies and objectives across the development, sales, marketing, and services organizations, and they provide a framework for timely and rational allocation of resources within businesses.\nAdditional information on our operating segments and geographic and product information is contained in Note 18 \u2013 Segment Information and Geographic Data of the Notes to Financial Statements (Part II, Item 8 of this Form 10-K).\nOur reportable segments are described below.\nProductivity and Business Processes\nOur Productivity and Business Processes segment consists of products and services in our portfolio of productivity, communication, and information services, spanning a variety of devices and platforms. This segment primarily comprises:\n\u2022\nMicrosoft 365 Commercial products and cloud services, including Microsoft 365 Commercial cloud, comprising Microsoft 365 Commercial, Enterprise Mobility + Security, the cloud portion of Windows Commercial, the per-user portion of Power BI, Exchange, SharePoint, Microsoft Teams, Microsoft 365 Security and Compliance, and Microsoft 365 Copilot; and Microsoft 365 Commercial products, comprising Windows Commercial on-premises and Office licensed on-premises.\n\u2022",
+          "n_words": 287,
+          "label": "[MSFT:11]"
+        },
+        {
+          "score": 0.7612831686379492,
+          "ticker": "MSFT",
+          "chunk_id": 264,
+          "text": "SEGMENT INFORMATION AND GEOGRAPHIC DATA\nIn its operation of the business, management, including our chief operating decision maker (\u201cCODM\u201d), who is also our\nChief Executive Officer\n, reviews certain financial information, including segmented internal profit and loss statements. The primary profitability measure used by the CODM to review segment operating results is operating income.\nThe CODM uses operating income to allocate resources during our annual planning process and throughout the year, as well as to assess the performance of our segments, primarily by monitoring actual results compared to prior periods and expected results.\nDuring the periods presented, we reported our financial performance based on the following\nthree\nsegments: Productivity and Business Processes, Intelligent Cloud, and More Personal Computing.\nOur reportable segments are described below.\nProductivity and Business Processes\nOur Productivity and Business Processes segment consists of products and services in our portfolio of productivity, communication, and information services, spanning a variety of devices and platforms. This segment primarily comprises:\n\u2022\nMicrosoft 365 Commercial products and cloud services, including Microsoft 365 Commercial cloud, comprising Microsoft 365 Commercial, Enterprise Mobility + Security, the cloud portion of Windows Commercial, the per-user portion of Power BI, Exchange, SharePoint, Microsoft Teams, Microsoft 365 Security and Compliance, and Microsoft 365 Copilot; and Microsoft 365 Commercial products, comprising Windows Commercial on-premises and Office licensed on-premises.\n\u2022\nMicrosoft 365 Consumer products and cloud services, including Microsoft 365 Consumer subscriptions, Office licensed on-premises, and other consumer services.\n\u2022\nLinkedIn, including Talent Solutions, Marketing Solutions, Premium Subscriptions, and Sales Solutions.\n\u2022\nDynamics products and cloud services, including Dynamics 365, comprising a set of intelligent, cloud-based applications across ERP, CRM, Power Apps, and Power Automate; and on-premises ERP and CRM applications.\nIntelligent Cloud",
+          "n_words": 282,
+          "label": "[MSFT:264]"
+        },
+        {
+          "score": 0.7150459241958854,
+          "ticker": "MSFT",
+          "chunk_id": 150,
+          "text": "We report our financial performance based on the following three segments: Productivity and Business Processes, Intelligent Cloud, and More Personal Computing. The segment amounts included in MD&A are presented on a basis consistent with our internal management reporting.\nAdditional information on our reportable segments is contained in Note 18 \u2013 Segment Information and Geographic Data of the Notes to Financial Statements (Part II, Item 8 of this Form 10-K).\n35\nPART II\nItem 7\nMetrics\nWe use metrics in assessing the performance of our business and to make informed decisions regarding the allocation of resources. We disclose metrics to enable investors to evaluate progress against our ambitions, provide transparency into performance trends, and reflect the continued evolution of our products and services. Our commercial and other business metrics are fundamentally connected based on how customers use our products and services. The metrics are disclosed in the MD&A or the Notes to Financial Statements (Part II, Item 8 of this Form 10-K). Financial metrics are calculated based on financial results prepared in accordance with accounting principles generally accepted in the United States of America (\u201cGAAP\u201d), and growth comparisons relate to the corresponding period of last fiscal year.\nIn the first quarter of fiscal year 2026, we made updates to our metrics to align with how we manage and monitor certain businesses. As part of these updates, Microsoft 365 Consumer subscribers was removed as a metric.\nCommercial\nOur commercial business primarily consists of Server products and cloud services, Microsoft 365 Commercial products and cloud services, the commercial portion of LinkedIn, Dynamics products and cloud services, and Enterprise and partner services. Our commercial metrics allow management and investors to assess the overall health of our commercial business and include leading indicators of future performance.",
+          "n_words": 291,
+          "label": "[MSFT:150]"
+        },
+        {
+          "score": 0.6879000042281647,
+          "ticker": "MSFT",
+          "chunk_id": 266,
+          "text": "XBOX (formerly Gaming), including XBOX hardware and XBOX content and services, comprising first- and third-party content (including games and in-game content), XBOX Game Pass and other subscriptions, XBOX Cloud Gaming, advertising, and other cloud services.\n\u2022\nSearch advertising (formerly Search and news advertising), comprising Bing, Copilot, Microsoft News, Microsoft Edge, and third-party affiliates.\n83\nPART II\nItem 8\nRevenue and costs are generally directly attributed to our segments. However, due to the integrated structure of our business, certain revenue recognized and costs incurred by one segment may benefit other segments. Revenue from certain contracts is allocated among the segments based on the relative value of the underlying products and services, which can include allocation based on actual prices charged, prices when sold separately, or estimated costs plus a profit margin. Cost of revenue is allocated in certain cases based on a relative revenue methodology. Operating expenses that are allocated primarily include those relating to our investments in AI infrastructure and training, as well as marketing of products and services, from which multiple segments benefit and are generally allocated based on relative gross margin.\nIn addition, certain costs are incurred at a corporate level and allocated to our segments. These allocated costs generally include legal, including settlements and fines, information technology, human resources, finance, excise taxes, field selling, shared facilities services, customer service and support, and severance incurred as part of a corporate program. Each allocation is measured differently based on the specific facts and circumstances of the costs being allocated and is generally based on relative gross margin or relative headcount.\nSegment revenue, cost of revenue, operating expenses, and operating income were as follows during the periods presented:\n(In millions)\nYear Ended June 30, | 2026 | 2025 | 2024\nProductivity and Business Processes",
+          "n_words": 294,
+          "label": "[MSFT:266]"
+        },
+        {
+          "score": 0.6809403055980643,
+          "ticker": "MSFT",
+          "chunk_id": 269,
+          "text": "Enterprise and partner services | 8,260 | 7,760 | 7,594\nOther | 109 | 72 | 45\nTotal | 331,839 | 281,724 | 245,122\nOur Microsoft Cloud revenue, which includes Microsoft 365 Commercial cloud, Azure and other cloud services, the commercial portion of LinkedIn, and Dynamics 365, was $\n214.4\nbillion, $\n168.9\nbillion, and $\n137.7\nbillion in fiscal years 2026, 2025, and 2024, respectively. These amounts are included in Server products and cloud services, Microsoft 365 Commercial products and cloud services, LinkedIn, and Dynamics products and cloud services in the table above.\nAssets are not allocated to segments for internal reporting presentations. A portion of amortization and depreciation is included with various other costs in an overhead allocation to each segment. It is impracticable for us to separately identify the amount of amortization and depreciation by segment that is included in the measure of segment profit or loss.\nLong-lived assets, excluding financial instruments and tax assets, classified by the location of the controlling statutory company and with countries over 10% of the total shown separately, were as follows:\n(In millions)\nJune 30, | 2026 | 2025 | 2024\nUnited States | 300,354 | 230,069 | 186,106\nOther countries | 175,159 | 141,833 | 115,263\nTotal | 475,513 | 371,902 | 301,369\n85\nPART II\nItem 8\nREPORT OF INDEPENDENT REGIST\nERED PUBLIC ACCOUNTING FIRM\nTo the Stockholders and the Board of Directors of Microsoft Corporation\nOpinion on the Financial Statements",
+          "n_words": 242,
+          "label": "[MSFT:269]"
+        }
+      ]
+    }
+  },
+  {
+    "question": "What was Apple's revenue in 2023 and what manufacturing outsourcing risks does Apple describe?",
+    "expected_route": "both",
+    "passed": true,
+    "status": 200,
+    "seconds": 20.13,
+    "response": {
+      "question": "What was Apple's revenue in 2023 and what manufacturing outsourcing risks does Apple describe?",
+      "ticker": "AAPL",
+      "route": "both",
+      "retrieval_mode": "vector",
+      "sql_result": {
+        "sql": "SELECT revenue FROM financials WHERE ticker = 'AAPL' AND fiscal_year = 2023",
+        "columns": [
+          "revenue"
+        ],
+        "rows": [
+          [
+            383285000000
+          ]
+        ],
+        "model": "nvidia/nemotron-3.5-super-vl:free",
+        "usage": {
+          "prompt_tokens": 632,
+          "completion_tokens": 409,
+          "total_tokens": 1041,
+          "cost": 0,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0,
+            "upstream_inference_prompt_cost": 0,
+            "upstream_inference_completions_cost": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 379,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "answer": "{\"columns\": [\"revenue\"], \"rows\": [[383285000000]]}",
+        "sources": [
+          {
+            "label": "DuckDB",
+            "tables": [
+              "companies",
+              "financials",
+              "ratios"
+            ],
+            "sql": "SELECT revenue FROM financials WHERE ticker = 'AAPL' AND fiscal_year = 2023"
+          }
+        ]
+      },
+      "rag_result": {
+        "answer": "Apple's total revenue for 2023 is not explicitly stated in the provided passages; [AAPL:114] and [AAPL:113] give 2023 operating expenses, gross margin dollars, and gross margin percentages, but not total net sales.\n\nManufacturing outsourcing risks described by Apple [AAPL:30]: events can make it difficult or impossible to manufacture and deliver products, create delays and inefficiencies in the supply and manufacturing chain, cause slowdowns and outages to service offerings, increase costs, and negatively impact consumer spending and demand. Operations are also subject to risks of industrial accidents at suppliers and contract manufacturers, which could result in serious injuries or loss of life, disrupt business, and harm reputation. Major public health issues, including pandemics such as COVID-19, could materially adversely affect Apple through their impact on the global economy and demand; imposition of protective public safety measures (e.g., travel restrictions and limitations on freight services and product movement); and disruptions to operations, supply chain, and sales and distribution channels, resulting in interruptions to supply of current products, delays in production ramps of new products, and delays in development of new services.",
+        "sources": [
+          {
+            "score": 0.7262439065644843,
+            "ticker": "AAPL",
+            "chunk_id": 114,
+            "text": "Operating expenses for 2025, 2024 and 2023 were as follows (dollars in millions):\n2025 | Change | 2024 | Change | 2023\nResearch and development | 34,550 | 10 | 31,370 | 5 | 29,915\nPercentage of total net sales | 8 | 8 | 8\nSelling, general and administrative | 27,601 | 6 | 26,097 | 5 | 24,932\nPercentage of total net sales | 7 | 7 | 7\nTotal operating expenses | 62,151 | 8 | 57,467 | 5 | 54,847\nPercentage of total net sales | 15 | 15 | 14\nResearch and Development\nThe growth in R&D expense during 2025 compared to 2024 was primarily driven by increases in headcount-related expenses and infrastructure-related costs.\nSelling, General and Administrative\nThe growth in selling, general and administrative expense during 2025 compared to 2024 was primarily driven by increases in headcount-related expenses and variable selling expenses.\nApple Inc. | 2025 Form 10-K | 24\nProvision for Income Taxes\nProvision for income taxes, effective tax rate and statutory federal income tax rate for 2025, 2024 and 2023 were as follows (dollars in millions):\n2025 | 2024 | 2023\nProvision for income taxes | 20,719 | 29,749 | 16,741\nEffective tax rate | 15.6 | 24.1 | 14.7\nStatutory federal income tax rate | 21 | 21 | 21\nThe Company\u2019s effective tax rate for 2025 was lower than the statutory federal income tax rate primarily due to a lower effective tax rate on foreign earnings, including the impact of changes in unrecognized tax benefits, the impact of the U.S. federal R&D credit, and tax benefits from share-based compensation, partially offset by a change in valuation allowance and state income taxes.",
+            "n_words": 281,
+            "label": "[AAPL:114]"
+          },
+          {
+            "score": 0.7241564899275417,
+            "ticker": "AAPL",
+            "chunk_id": 113,
+            "text": "Apple Inc. | 2025 Form 10-K | 23\nGross Margin\nProducts and Services gross margin and gross margin percentage for 2025, 2024 and 2023 were as follows (dollars in millions):\n2025 | 2024 | 2023\nGross margin:\nProducts | 112,887 | 109,633 | 108,803\nServices | 82,314 | 71,050 | 60,345\nTotal gross margin | 195,201 | 180,683 | 169,148\nGross margin percentage:\nProducts | 36.8 | 37.2 | 36.5\nServices | 75.4 | 73.9 | 70.8\nTotal gross margin percentage | 46.9 | 46.2 | 44.1\nProducts Gross Margin\nProducts gross margin increased during 2025 compared to 2024 primarily due to favorable costs and a different mix of products, partially offset by tariff costs.\nProducts gross margin percentage decreased during 2025 compared to 2024 primarily due to a different mix of products and tariff costs, partially offset by other favorable costs.\nServices Gross Margin\nServices gross margin increased during 2025 compared to 2024 primarily due to higher Services net sales and a different mix of services.\nServices gross margin percentage increased during 2025 compared to 2024 primarily due to a different mix of services, partially offset by higher costs.\nThe Company\u2019s future gross margins can be impacted by a variety of factors, as discussed in Part I, Item 1A of this Form 10-K under the heading \u201cRisk Factors.\u201d As a result, the Company believes, in general, gross margins will be subject to volatility and downward pressure.\nOperating Expenses\nOperating expenses for 2025, 2024 and 2023 were as follows (dollars in millions):\n2025 | Change | 2024 | Change | 2023\nResearch and development | 34,550 | 10 | 31,370 | 5 | 29,915\nPercentage of total net sales | 8 | 8 | 8\nSelling, general and administrative | 27,601 | 6 | 26,097 | 5 | 24,932",
+            "n_words": 299,
+            "label": "[AAPL:113]"
+          },
+          {
+            "score": 0.7139949593497031,
+            "ticker": "AAPL",
+            "chunk_id": 160,
+            "text": "The following table shows share-based compensation expense and the related income tax benefit included in the Consolidated Statements of Operations for 2025, 2024 and 2023 (in millions):\n2025 | 2024 | 2023\nShare-based compensation expense | 12,863 | 11,688 | 10,833\nIncome tax benefit related to share-based compensation expense | ( 3,602 ) | ( 3,350 ) | ( 3,421 )\nAs of September 27, 2025, the total unrecognized compensation cost related to outstanding RSUs was $\n21.8\nbillion, which the Company expects to recognize over a weighted-average period of\n2.5\nyears.\nApple Inc. | 2025 Form 10-K | 45\nNote 12 \u2013\nCommitments, Contingencies and Supply Concentrations\nUnconditional Purchase Obligations\nThe Company has entered into certain off\u2013balance sheet commitments that require the future purchase of goods or services (\u201cunconditional purchase obligations\u201d). The Company\u2019s unconditional purchase obligations primarily consist of supplier arrangements, licensed intellectual property and content, and distribution rights.\nFuture payments under unconditional purchase obligations with a remaining term in excess of one year as of September 27, 2025, are as follows (in millions):\n2026 | 4,752\n2027 | 3,708\n2028 | 1,981\n2029 | 1,306\n2030 | 788\nThereafter | 773\nTotal | 13,308\nContingencies\nThe Company is subject to various legal proceedings and claims that have arisen in the ordinary course of business and that have not been fully resolved. The outcome of litigation is inherently uncertain. In the opinion of management, there was not at least a reasonable possibility the Company may have incurred a material loss, or a material loss greater than a recorded accrual, concerning loss contingencies for asserted legal and other claims.\nConcentrations in the Available Sources of Supply of Materials and Product",
+            "n_words": 280,
+            "label": "[AAPL:160]"
+          },
+          {
+            "score": 0.7109269133047214,
+            "ticker": "AAPL",
+            "chunk_id": 139,
+            "text": "Services net sales include amortization of the deferred value of services bundled in the sales price of certain products.\nThe Company\u2019s proportion of net sales by disaggregated revenue source was generally consistent for each reportable segment in Note 13, \u201cSegment Information and Geographic Data\u201d for 2025, 2024 and 2023, except in Greater China, where iPhone revenue represented a moderately higher proportion of net sales.\nAs of September 27, 2025 and September 28, 2024, the Company had total deferred revenue of $\n13.7\nbillion and $\n12.8\nbillion, respectively. As of September 27, 2025, the Company expects\n66\n% of total deferred revenue to be realized in less than a year,\n23\n% within one-to-two years,\n9\n% within two-to-three years and\n2\n% in greater than three years.\nNote 3 \u2013\nEarnings Per Share\nThe following table shows the computation of basic and diluted earnings per share for 2025, 2024 and 2023 (net income in millions and shares in thousands):\n2025 | 2024 | 2023\nNumerator:\nNet income | 112,010 | 93,736 | 96,995\nDenominator:\nWeighted-average basic shares outstanding | 14,948,500 | 15,343,783 | 15,744,231\nEffect of dilutive share-based awards | 56,197 | 64,312 | 68,316\nWeighted-average diluted shares | 15,004,697 | 15,408,095 | 15,812,547\nBasic earnings per share | 7.49 | 6.11 | 6.16\nDiluted earnings per share | 7.46 | 6.08 | 6.13\nApproximately\n24\nmillion restricted stock units (\u201cRSUs\u201d) were excluded from the computation of diluted earnings per share for 2023 because their effect would have been antidilutive.\nApple Inc. | 2025 Form 10-K | 36\nNote 4 \u2013\nFinancial Instruments\nCash, Cash Equivalents and Marketable Securities\nThe following tables show the Company\u2019s cash, cash equivalents and marketable securities by significant investment category as of September 27, 2025 and September 28, 2024 (in millions):\n2025",
+            "n_words": 298,
+            "label": "[AAPL:139]"
+          },
+          {
+            "score": 0.709667510483458,
+            "ticker": "AAPL",
+            "chunk_id": 30,
+            "text": "Such events can make it difficult or impossible for the Company to manufacture and deliver products to its customers, create delays and inefficiencies in the Company\u2019s supply and manufacturing chain, result in slowdowns and outages to the Company\u2019s service offerings, increase the Company\u2019s costs, and negatively impact consumer spending and demand in affected areas.\nThe Company\u2019s operations are also subject to the risks of industrial accidents at its suppliers and contract manufacturers. While the Company\u2019s suppliers are required to maintain safe working environments and operations, an industrial accident could occur and could result in serious injuries or loss of life, disruption to the Company\u2019s business, and harm to the Company\u2019s reputation. Major public health issues, including pandemics such as the COVID-19 pandemic, have adversely affected, and could in the future materially adversely affect, the Company due to their impact on the global economy and demand for consumer products; the imposition of protective public safety measures, such as stringent employee travel restrictions and limitations on freight services and the movement of products between regions; and disruptions in the Company\u2019s operations, supply chain and sales and distribution channels, resulting in interruptions to the supply of current products and offering of existing services, and delays in production ramps of new products and development of new services.\nApple Inc. | 2025 Form 10-K | 6",
+            "n_words": 221,
+            "label": "[AAPL:30]"
+          }
+        ],
+        "citations": [
+          "[AAPL:113]",
+          "[AAPL:114]",
+          "[AAPL:30]"
+        ],
+        "model": "nvidia/nemotron-3.5-super-vl:free",
+        "usage": {
+          "prompt_tokens": 2740,
+          "completion_tokens": 1904,
+          "total_tokens": 4644,
+          "cost": 0,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0,
+            "upstream_inference_prompt_cost": 0,
+            "upstream_inference_completions_cost": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 1646,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        }
+      },
+      "answer": "Structured data:\n{\"columns\": [\"revenue\"], \"rows\": [[383285000000]]}\n\nFiling evidence:\nApple's total revenue for 2023 is not explicitly stated in the provided passages; [AAPL:114] and [AAPL:113] give 2023 operating expenses, gross margin dollars, and gross margin percentages, but not total net sales.\n\nManufacturing outsourcing risks described by Apple [AAPL:30]: events can make it difficult or impossible to manufacture and deliver products, create delays and inefficiencies in the supply and manufacturing chain, cause slowdowns and outages to service offerings, increase costs, and negatively impact consumer spending and demand. Operations are also subject to risks of industrial accidents at suppliers and contract manufacturers, which could result in serious injuries or loss of life, disrupt business, and harm reputation. Major public health issues, including pandemics such as COVID-19, could materially adversely affect Apple through their impact on the global economy and demand; imposition of protective public safety measures (e.g., travel restrictions and limitations on freight services and product movement); and disruptions to operations, supply chain, and sales and distribution channels, resulting in interruptions to supply of current products, delays in production ramps of new products, and delays in development of new services.",
+      "sources": [
+        {
+          "label": "DuckDB",
+          "tables": [
+            "companies",
+            "financials",
+            "ratios"
+          ],
+          "sql": "SELECT revenue FROM financials WHERE ticker = 'AAPL' AND fiscal_year = 2023"
+        },
+        {
+          "score": 0.7262439065644843,
+          "ticker": "AAPL",
+          "chunk_id": 114,
+          "text": "Operating expenses for 2025, 2024 and 2023 were as follows (dollars in millions):\n2025 | Change | 2024 | Change | 2023\nResearch and development | 34,550 | 10 | 31,370 | 5 | 29,915\nPercentage of total net sales | 8 | 8 | 8\nSelling, general and administrative | 27,601 | 6 | 26,097 | 5 | 24,932\nPercentage of total net sales | 7 | 7 | 7\nTotal operating expenses | 62,151 | 8 | 57,467 | 5 | 54,847\nPercentage of total net sales | 15 | 15 | 14\nResearch and Development\nThe growth in R&D expense during 2025 compared to 2024 was primarily driven by increases in headcount-related expenses and infrastructure-related costs.\nSelling, General and Administrative\nThe growth in selling, general and administrative expense during 2025 compared to 2024 was primarily driven by increases in headcount-related expenses and variable selling expenses.\nApple Inc. | 2025 Form 10-K | 24\nProvision for Income Taxes\nProvision for income taxes, effective tax rate and statutory federal income tax rate for 2025, 2024 and 2023 were as follows (dollars in millions):\n2025 | 2024 | 2023\nProvision for income taxes | 20,719 | 29,749 | 16,741\nEffective tax rate | 15.6 | 24.1 | 14.7\nStatutory federal income tax rate | 21 | 21 | 21\nThe Company\u2019s effective tax rate for 2025 was lower than the statutory federal income tax rate primarily due to a lower effective tax rate on foreign earnings, including the impact of changes in unrecognized tax benefits, the impact of the U.S. federal R&D credit, and tax benefits from share-based compensation, partially offset by a change in valuation allowance and state income taxes.",
+          "n_words": 281,
+          "label": "[AAPL:114]"
+        },
+        {
+          "score": 0.7241564899275417,
+          "ticker": "AAPL",
+          "chunk_id": 113,
+          "text": "Apple Inc. | 2025 Form 10-K | 23\nGross Margin\nProducts and Services gross margin and gross margin percentage for 2025, 2024 and 2023 were as follows (dollars in millions):\n2025 | 2024 | 2023\nGross margin:\nProducts | 112,887 | 109,633 | 108,803\nServices | 82,314 | 71,050 | 60,345\nTotal gross margin | 195,201 | 180,683 | 169,148\nGross margin percentage:\nProducts | 36.8 | 37.2 | 36.5\nServices | 75.4 | 73.9 | 70.8\nTotal gross margin percentage | 46.9 | 46.2 | 44.1\nProducts Gross Margin\nProducts gross margin increased during 2025 compared to 2024 primarily due to favorable costs and a different mix of products, partially offset by tariff costs.\nProducts gross margin percentage decreased during 2025 compared to 2024 primarily due to a different mix of products and tariff costs, partially offset by other favorable costs.\nServices Gross Margin\nServices gross margin increased during 2025 compared to 2024 primarily due to higher Services net sales and a different mix of services.\nServices gross margin percentage increased during 2025 compared to 2024 primarily due to a different mix of services, partially offset by higher costs.\nThe Company\u2019s future gross margins can be impacted by a variety of factors, as discussed in Part I, Item 1A of this Form 10-K under the heading \u201cRisk Factors.\u201d As a result, the Company believes, in general, gross margins will be subject to volatility and downward pressure.\nOperating Expenses\nOperating expenses for 2025, 2024 and 2023 were as follows (dollars in millions):\n2025 | Change | 2024 | Change | 2023\nResearch and development | 34,550 | 10 | 31,370 | 5 | 29,915\nPercentage of total net sales | 8 | 8 | 8\nSelling, general and administrative | 27,601 | 6 | 26,097 | 5 | 24,932",
+          "n_words": 299,
+          "label": "[AAPL:113]"
+        },
+        {
+          "score": 0.7139949593497031,
+          "ticker": "AAPL",
+          "chunk_id": 160,
+          "text": "The following table shows share-based compensation expense and the related income tax benefit included in the Consolidated Statements of Operations for 2025, 2024 and 2023 (in millions):\n2025 | 2024 | 2023\nShare-based compensation expense | 12,863 | 11,688 | 10,833\nIncome tax benefit related to share-based compensation expense | ( 3,602 ) | ( 3,350 ) | ( 3,421 )\nAs of September 27, 2025, the total unrecognized compensation cost related to outstanding RSUs was $\n21.8\nbillion, which the Company expects to recognize over a weighted-average period of\n2.5\nyears.\nApple Inc. | 2025 Form 10-K | 45\nNote 12 \u2013\nCommitments, Contingencies and Supply Concentrations\nUnconditional Purchase Obligations\nThe Company has entered into certain off\u2013balance sheet commitments that require the future purchase of goods or services (\u201cunconditional purchase obligations\u201d). The Company\u2019s unconditional purchase obligations primarily consist of supplier arrangements, licensed intellectual property and content, and distribution rights.\nFuture payments under unconditional purchase obligations with a remaining term in excess of one year as of September 27, 2025, are as follows (in millions):\n2026 | 4,752\n2027 | 3,708\n2028 | 1,981\n2029 | 1,306\n2030 | 788\nThereafter | 773\nTotal | 13,308\nContingencies\nThe Company is subject to various legal proceedings and claims that have arisen in the ordinary course of business and that have not been fully resolved. The outcome of litigation is inherently uncertain. In the opinion of management, there was not at least a reasonable possibility the Company may have incurred a material loss, or a material loss greater than a recorded accrual, concerning loss contingencies for asserted legal and other claims.\nConcentrations in the Available Sources of Supply of Materials and Product",
+          "n_words": 280,
+          "label": "[AAPL:160]"
+        },
+        {
+          "score": 0.7109269133047214,
+          "ticker": "AAPL",
+          "chunk_id": 139,
+          "text": "Services net sales include amortization of the deferred value of services bundled in the sales price of certain products.\nThe Company\u2019s proportion of net sales by disaggregated revenue source was generally consistent for each reportable segment in Note 13, \u201cSegment Information and Geographic Data\u201d for 2025, 2024 and 2023, except in Greater China, where iPhone revenue represented a moderately higher proportion of net sales.\nAs of September 27, 2025 and September 28, 2024, the Company had total deferred revenue of $\n13.7\nbillion and $\n12.8\nbillion, respectively. As of September 27, 2025, the Company expects\n66\n% of total deferred revenue to be realized in less than a year,\n23\n% within one-to-two years,\n9\n% within two-to-three years and\n2\n% in greater than three years.\nNote 3 \u2013\nEarnings Per Share\nThe following table shows the computation of basic and diluted earnings per share for 2025, 2024 and 2023 (net income in millions and shares in thousands):\n2025 | 2024 | 2023\nNumerator:\nNet income | 112,010 | 93,736 | 96,995\nDenominator:\nWeighted-average basic shares outstanding | 14,948,500 | 15,343,783 | 15,744,231\nEffect of dilutive share-based awards | 56,197 | 64,312 | 68,316\nWeighted-average diluted shares | 15,004,697 | 15,408,095 | 15,812,547\nBasic earnings per share | 7.49 | 6.11 | 6.16\nDiluted earnings per share | 7.46 | 6.08 | 6.13\nApproximately\n24\nmillion restricted stock units (\u201cRSUs\u201d) were excluded from the computation of diluted earnings per share for 2023 because their effect would have been antidilutive.\nApple Inc. | 2025 Form 10-K | 36\nNote 4 \u2013\nFinancial Instruments\nCash, Cash Equivalents and Marketable Securities\nThe following tables show the Company\u2019s cash, cash equivalents and marketable securities by significant investment category as of September 27, 2025 and September 28, 2024 (in millions):\n2025",
+          "n_words": 298,
+          "label": "[AAPL:139]"
+        },
+        {
+          "score": 0.709667510483458,
+          "ticker": "AAPL",
+          "chunk_id": 30,
+          "text": "Such events can make it difficult or impossible for the Company to manufacture and deliver products to its customers, create delays and inefficiencies in the Company\u2019s supply and manufacturing chain, result in slowdowns and outages to the Company\u2019s service offerings, increase the Company\u2019s costs, and negatively impact consumer spending and demand in affected areas.\nThe Company\u2019s operations are also subject to the risks of industrial accidents at its suppliers and contract manufacturers. While the Company\u2019s suppliers are required to maintain safe working environments and operations, an industrial accident could occur and could result in serious injuries or loss of life, disruption to the Company\u2019s business, and harm to the Company\u2019s reputation. Major public health issues, including pandemics such as the COVID-19 pandemic, have adversely affected, and could in the future materially adversely affect, the Company due to their impact on the global economy and demand for consumer products; the imposition of protective public safety measures, such as stringent employee travel restrictions and limitations on freight services and the movement of products between regions; and disruptions in the Company\u2019s operations, supply chain and sales and distribution channels, resulting in interruptions to the supply of current products and offering of existing services, and delays in production ramps of new products and development of new services.\nApple Inc. | 2025 Form 10-K | 6",
+          "n_words": 221,
+          "label": "[AAPL:30]"
+        }
+      ]
+    }
+  }
+]

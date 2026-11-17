@@ -1,0 +1,12 @@
+ticker,name,cik,sector
+AAPL,Apple Inc.,320193,Technology
+MSFT,MICROSOFT CORPORATION,789019,Technology
+NVDA,NVIDIA CORP,1045810,Technology
+CVX,Chevron Corp,93410,Energy
+JNJ,Johnson & Johnson,200406,Healthcare
+PFE,PFIZER INC,78003,Healthcare
+WMT,WALMART INC.,104169,Consumer
+KO,COCA COLA CO,21344,Consumer
+PG,The Procter & Gamble Company,80424,Consumer
+CAT,CATERPILLAR INC,18230,Industrials
+HD,"The Home Depot, Inc.",354950,Retail

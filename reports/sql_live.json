@@ -1,0 +1,304 @@
+{
+  "timestamp_utc": "2026-11-17T02:41:19.982956+00:00",
+  "mode": "live_text_to_sql",
+  "total": 20,
+  "passed": 8,
+  "accuracy": 0.4,
+  "questions": [
+    {
+      "id": "d001",
+      "question": "Which company had the highest revenue in fiscal 2023?",
+      "expected": [
+        [
+          "WMT"
+        ]
+      ],
+      "actual": [
+        [
+          "WMT"
+        ]
+      ],
+      "sql": "SELECT ticker FROM financials WHERE fiscal_year = 2023 AND revenue = (SELECT MAX(revenue) FROM financials WHERE fiscal_year = 2023) ORDER BY ticker",
+      "correct": true,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d002",
+      "question": "What was Apple's revenue in 2023?",
+      "expected": [
+        [
+          383285000000
+        ]
+      ],
+      "actual": [
+        [
+          383285000000
+        ]
+      ],
+      "sql": "SELECT revenue FROM financials WHERE ticker = 'AAPL' AND fiscal_year = 2023",
+      "correct": true,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d003",
+      "question": "What was Microsoft's net income in 2022?",
+      "expected": [
+        [
+          72738000000
+        ]
+      ],
+      "actual": [
+        [
+          72738000000
+        ]
+      ],
+      "sql": "SELECT net_income FROM financials WHERE ticker = 'MSFT' AND fiscal_year = 2022",
+      "correct": true,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d004",
+      "question": "Which company had the highest operating margin in 2023?",
+      "expected": [
+        [
+          "MSFT"
+        ]
+      ],
+      "actual": [
+        [
+          "MSFT"
+        ]
+      ],
+      "sql": "SELECT r.ticker FROM ratios AS r WHERE r.fiscal_year = 2023 AND NOT r.operating_margin IS NULL ORDER BY r.operating_margin DESC LIMIT 1",
+      "correct": true,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d005",
+      "question": "Which company had the highest net margin in 2024?",
+      "expected": [
+        [
+          "NVDA"
+        ]
+      ],
+      "actual": [
+        [
+          "NVDA"
+        ]
+      ],
+      "sql": "SELECT c.ticker FROM ratios AS r JOIN companies AS c USING (ticker) WHERE r.fiscal_year = 2024 AND NOT r.net_margin IS NULL ORDER BY r.net_margin DESC, c.ticker ASC LIMIT 1",
+      "correct": true,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d006",
+      "question": "Which sector had the highest average net margin in 2023?",
+      "expected": [
+        [
+          "Technology"
+        ]
+      ],
+      "actual": [
+        [
+          "Technology"
+        ]
+      ],
+      "sql": "SELECT c.sector FROM companies AS c JOIN ratios AS r USING (ticker) WHERE r.fiscal_year = 2023 GROUP BY c.sector ORDER BY AVG(r.net_margin) DESC LIMIT 1",
+      "correct": true,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d007",
+      "question": "How many companies had revenue above 100 billion dollars in 2023?",
+      "expected": [
+        [
+          5
+        ]
+      ],
+      "actual": [
+        [
+          5
+        ]
+      ],
+      "sql": "SELECT COUNT(DISTINCT f.ticker) AS company_count FROM financials AS f JOIN companies AS c USING (ticker) WHERE f.fiscal_year = 2023 AND f.revenue > 100000000000",
+      "correct": true,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d008",
+      "question": "Which company had the largest total assets in 2024?",
+      "expected": [
+        [
+          "MSFT"
+        ]
+      ],
+      "actual": [
+        [
+          "MSFT"
+        ]
+      ],
+      "sql": "SELECT ticker FROM financials WHERE fiscal_year = 2024 AND NOT total_assets IS NULL ORDER BY total_assets DESC LIMIT 1",
+      "correct": true,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d009",
+      "question": "Which company had the smallest total assets in 2023?",
+      "expected": [
+        [
+          "NVDA"
+        ]
+      ],
+      "correct": false,
+      "error": "OpenRouter HTTP 429; check model, key, credits or rate limit"
+    },
+    {
+      "id": "d010",
+      "question": "Which company generated the most operating cash flow in 2024?",
+      "expected": [
+        [
+          "MSFT"
+        ]
+      ],
+      "correct": false,
+      "error": "OpenRouter HTTP 429; check model, key, credits or rate limit"
+    },
+    {
+      "id": "d011",
+      "question": "What was Apple's revenue growth from 2023 to 2024, in percent?",
+      "expected": [
+        [
+          2.0
+        ]
+      ],
+      "correct": false,
+      "error": "OpenRouter HTTP 429; check model, key, credits or rate limit"
+    },
+    {
+      "id": "d012",
+      "question": "Which company had the highest revenue growth from 2022 to 2023, in percent?",
+      "expected": [
+        [
+          "CAT"
+        ]
+      ],
+      "correct": false,
+      "error": "OpenRouter HTTP 429; check model, key, credits or rate limit"
+    },
+    {
+      "id": "d013",
+      "question": "Which companies had lower net income in 2023 than in 2022?",
+      "expected": [
+        [
+          "AAPL"
+        ],
+        [
+          "CVX"
+        ],
+        [
+          "HD"
+        ],
+        [
+          "MSFT"
+        ],
+        [
+          "NVDA"
+        ],
+        [
+          "PFE"
+        ],
+        [
+          "PG"
+        ],
+        [
+          "WMT"
+        ]
+      ],
+      "correct": false,
+      "error": "OpenRouter HTTP 429; check model, key, credits or rate limit"
+    },
+    {
+      "id": "d014",
+      "question": "What was the total revenue of the Technology sector in 2023?",
+      "expected": [
+        [
+          622174000000
+        ]
+      ],
+      "correct": false,
+      "error": "OpenRouter HTTP 429; check model, key, credits or rate limit"
+    },
+    {
+      "id": "d015",
+      "question": "What was the average revenue of Healthcare companies in 2022?",
+      "expected": [
+        [
+          90582500000.0
+        ]
+      ],
+      "correct": false,
+      "error": "OpenRouter HTTP 429; check model, key, credits or rate limit"
+    },
+    {
+      "id": "d016",
+      "question": "Which companies have no operating income values in this dataset?",
+      "expected": [
+        [
+          "CVX"
+        ],
+        [
+          "JNJ"
+        ],
+        [
+          "PFE"
+        ]
+      ],
+      "correct": false,
+      "error": "OpenRouter HTTP 429; check model, key, credits or rate limit"
+    },
+    {
+      "id": "d017",
+      "question": "What was Johnson & Johnson's pretax margin in 2023, in percent?",
+      "expected": [
+        [
+          17.7
+        ]
+      ],
+      "correct": false,
+      "error": "OpenRouter HTTP 429; check model, key, credits or rate limit"
+    },
+    {
+      "id": "d018",
+      "question": "What was Coca-Cola's ratio of operating cash flow to net income in 2023?",
+      "expected": [
+        [
+          1.08
+        ]
+      ],
+      "correct": false,
+      "error": "OpenRouter HTTP 429; check model, key, credits or rate limit"
+    },
+    {
+      "id": "d019",
+      "question": "Which company had the highest net income in 2021?",
+      "expected": [
+        [
+          "AAPL"
+        ]
+      ],
+      "correct": false,
+      "error": "OpenRouter HTTP 429; check model, key, credits or rate limit"
+    },
+    {
+      "id": "d020",
+      "question": "How many fiscal years of data do we have for Walmart?",
+      "expected": [
+        [
+          8
+        ]
+      ],
+      "correct": false,
+      "error": "OpenRouter HTTP 429; check model, key, credits or rate limit"
+    }
+  ]
+}

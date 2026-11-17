@@ -1,0 +1,418 @@
+{
+  "timestamp_utc": "2026-11-17T02:38:20.598457+00:00",
+  "mode": "live_text_to_sql",
+  "total": 20,
+  "passed": 9,
+  "accuracy": 0.45,
+  "questions": [
+    {
+      "id": "d001",
+      "question": "Which company had the highest revenue in fiscal 2023?",
+      "expected": [
+        [
+          "WMT"
+        ]
+      ],
+      "actual": [
+        [
+          "WALMART INC.",
+          611289000000
+        ]
+      ],
+      "sql": "SELECT c.name, f.revenue FROM companies AS c JOIN financials AS f USING (ticker) WHERE f.fiscal_year = 2023 ORDER BY f.revenue DESC LIMIT 1",
+      "correct": false,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d002",
+      "question": "What was Apple's revenue in 2023?",
+      "expected": [
+        [
+          383285000000
+        ]
+      ],
+      "actual": [
+        [
+          383285000000
+        ]
+      ],
+      "sql": "SELECT f.revenue FROM financials AS f JOIN companies AS c USING (ticker) WHERE c.ticker = 'AAPL' AND f.fiscal_year = 2023",
+      "correct": true,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d003",
+      "question": "What was Microsoft's net income in 2022?",
+      "expected": [
+        [
+          72738000000
+        ]
+      ],
+      "actual": [
+        [
+          72738000000
+        ]
+      ],
+      "sql": "SELECT net_income FROM financials WHERE ticker = 'MSFT' AND fiscal_year = 2022",
+      "correct": true,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d004",
+      "question": "Which company had the highest operating margin in 2023?",
+      "expected": [
+        [
+          "MSFT"
+        ]
+      ],
+      "correct": false,
+      "error": "Binder Error: Column \"fiscal_year\" does not exist on left side of join!"
+    },
+    {
+      "id": "d005",
+      "question": "Which company had the highest net margin in 2024?",
+      "expected": [
+        [
+          "NVDA"
+        ]
+      ],
+      "actual": [
+        [
+          "NVDA",
+          "NVIDIA CORP"
+        ]
+      ],
+      "sql": "SELECT c.ticker, c.name FROM companies AS c JOIN ratios AS r USING (ticker) WHERE r.fiscal_year = 2024 ORDER BY r.net_margin DESC LIMIT 1",
+      "correct": false,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d006",
+      "question": "Which sector had the highest average net margin in 2023?",
+      "expected": [
+        [
+          "Technology"
+        ]
+      ],
+      "actual": [
+        [
+          "Technology"
+        ]
+      ],
+      "sql": "SELECT c.sector FROM companies AS c JOIN ratios AS r USING (ticker) WHERE r.fiscal_year = 2023 GROUP BY c.sector ORDER BY AVG(r.net_margin) DESC LIMIT 1",
+      "correct": true,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d007",
+      "question": "How many companies had revenue above 100 billion dollars in 2023?",
+      "expected": [
+        [
+          5
+        ]
+      ],
+      "actual": [
+        [
+          5
+        ]
+      ],
+      "sql": "SELECT COUNT(*) AS company_count FROM companies AS c JOIN financials AS f USING (ticker) WHERE f.fiscal_year = 2023 AND f.revenue > 100000000000",
+      "correct": true,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d008",
+      "question": "Which company had the largest total assets in 2024?",
+      "expected": [
+        [
+          "MSFT"
+        ]
+      ],
+      "actual": [
+        [
+          "MSFT",
+          "MICROSOFT CORPORATION",
+          512163000000
+        ]
+      ],
+      "sql": "SELECT c.ticker, c.name, f.total_assets FROM companies AS c JOIN financials AS f USING (ticker) WHERE f.fiscal_year = 2024 AND NOT f.total_assets IS NULL ORDER BY f.total_assets DESC LIMIT 1",
+      "correct": false,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d009",
+      "question": "Which company had the smallest total assets in 2023?",
+      "expected": [
+        [
+          "NVDA"
+        ]
+      ],
+      "actual": [
+        [
+          "NVDA",
+          "NVIDIA CORP",
+          41182000000
+        ]
+      ],
+      "sql": "SELECT c.ticker, c.name, f.total_assets FROM companies AS c JOIN financials AS f USING (ticker) WHERE f.fiscal_year = 2023 AND NOT f.total_assets IS NULL ORDER BY f.total_assets ASC LIMIT 1",
+      "correct": false,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d010",
+      "question": "Which company generated the most operating cash flow in 2024?",
+      "expected": [
+        [
+          "MSFT"
+        ]
+      ],
+      "actual": [
+        [
+          "MSFT",
+          "MICROSOFT CORPORATION",
+          118548000000
+        ]
+      ],
+      "sql": "SELECT c.ticker, c.name, f.operating_cash_flow FROM companies AS c JOIN financials AS f USING (ticker) WHERE f.fiscal_year = 2024 AND NOT f.operating_cash_flow IS NULL ORDER BY f.operating_cash_flow DESC LIMIT 1",
+      "correct": false,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d011",
+      "question": "What was Apple's revenue growth from 2023 to 2024, in percent?",
+      "expected": [
+        [
+          2.0
+        ]
+      ],
+      "actual": [
+        [
+          2.0
+        ]
+      ],
+      "sql": "WITH aapl_rev AS (SELECT f.fiscal_year, f.revenue FROM financials AS f JOIN companies AS c USING (ticker) WHERE c.ticker = 'AAPL' AND f.fiscal_year IN (2023, 2024)) SELECT ROUND((MAX(CASE WHEN fiscal_year = 2024 THEN revenue END) / MAX(CASE WHEN fiscal_year = 2023 THEN revenue END) - 1) * 100, 1) AS revenue_growth_percent FROM aapl_rev",
+      "correct": true,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d012",
+      "question": "Which company had the highest revenue growth from 2022 to 2023, in percent?",
+      "expected": [
+        [
+          "CAT"
+        ]
+      ],
+      "actual": [
+        [
+          "CATERPILLAR INC",
+          12.8
+        ]
+      ],
+      "sql": "WITH rev22 AS (SELECT ticker, revenue FROM financials WHERE fiscal_year = 2022), rev23 AS (SELECT ticker, revenue FROM financials WHERE fiscal_year = 2023) SELECT c.name, ROUND(((r23.revenue / r22.revenue - 1) * 100), 1) AS revenue_growth_percent FROM rev22 AS r22 JOIN rev23 AS r23 USING (ticker) JOIN companies AS c USING (ticker) WHERE NOT r22.revenue IS NULL AND NOT r23.revenue IS NULL ORDER BY revenue_growth_percent DESC LIMIT 1",
+      "correct": false,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d013",
+      "question": "Which companies had lower net income in 2023 than in 2022?",
+      "expected": [
+        [
+          "AAPL"
+        ],
+        [
+          "CVX"
+        ],
+        [
+          "HD"
+        ],
+        [
+          "MSFT"
+        ],
+        [
+          "NVDA"
+        ],
+        [
+          "PFE"
+        ],
+        [
+          "PG"
+        ],
+        [
+          "WMT"
+        ]
+      ],
+      "actual": [
+        [
+          "AAPL",
+          "Apple Inc."
+        ],
+        [
+          "CVX",
+          "Chevron Corp"
+        ],
+        [
+          "HD",
+          "The Home Depot, Inc."
+        ],
+        [
+          "MSFT",
+          "MICROSOFT CORPORATION"
+        ],
+        [
+          "NVDA",
+          "NVIDIA CORP"
+        ],
+        [
+          "PFE",
+          "PFIZER INC"
+        ],
+        [
+          "PG",
+          "The Procter & Gamble Company"
+        ],
+        [
+          "WMT",
+          "WALMART INC."
+        ]
+      ],
+      "sql": "WITH f22 AS (SELECT ticker, net_income FROM financials WHERE fiscal_year = 2022), f23 AS (SELECT ticker, net_income FROM financials WHERE fiscal_year = 2023) SELECT c.ticker, c.name FROM companies AS c JOIN f22 ON c.ticker = f22.ticker JOIN f23 ON c.ticker = f23.ticker WHERE f23.net_income < f22.net_income ORDER BY c.ticker",
+      "correct": false,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d014",
+      "question": "What was the total revenue of the Technology sector in 2023?",
+      "expected": [
+        [
+          622174000000
+        ]
+      ],
+      "actual": [
+        [
+          622174000000
+        ]
+      ],
+      "sql": "SELECT SUM(f.revenue) AS total_revenue FROM companies AS c JOIN financials AS f USING (ticker) WHERE c.sector = 'Technology' AND f.fiscal_year = 2023",
+      "correct": true,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d015",
+      "question": "What was the average revenue of Healthcare companies in 2022?",
+      "expected": [
+        [
+          90582500000.0
+        ]
+      ],
+      "actual": [
+        [
+          90582500000.0
+        ]
+      ],
+      "sql": "SELECT AVG(f.revenue) AS average_revenue FROM companies AS c JOIN financials AS f USING (ticker) WHERE c.sector = 'Healthcare' AND f.fiscal_year = 2022",
+      "correct": true,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d016",
+      "question": "Which companies have no operating income values in this dataset?",
+      "expected": [
+        [
+          "CVX"
+        ],
+        [
+          "JNJ"
+        ],
+        [
+          "PFE"
+        ]
+      ],
+      "actual": [
+        [
+          "CVX",
+          "Chevron Corp"
+        ],
+        [
+          "JNJ",
+          "Johnson & Johnson"
+        ],
+        [
+          "PFE",
+          "PFIZER INC"
+        ]
+      ],
+      "sql": "SELECT c.ticker, c.name FROM companies AS c JOIN financials AS f USING (ticker) GROUP BY c.ticker, c.name HAVING COUNT(f.operating_income) = 0 ORDER BY c.ticker",
+      "correct": false,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d017",
+      "question": "What was Johnson & Johnson's pretax margin in 2023, in percent?",
+      "expected": [
+        [
+          17.7
+        ]
+      ],
+      "actual": [
+        [
+          17.7
+        ]
+      ],
+      "sql": "SELECT ROUND(r.pretax_margin * 100, 1) AS pretax_margin_percent FROM companies AS c JOIN ratios AS r USING (ticker) WHERE c.name = 'Johnson & Johnson' AND r.fiscal_year = 2023",
+      "correct": true,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d018",
+      "question": "What was Coca-Cola's ratio of operating cash flow to net income in 2023?",
+      "expected": [
+        [
+          1.08
+        ]
+      ],
+      "actual": [
+        [
+          1.082602202725406
+        ]
+      ],
+      "sql": "SELECT f.operating_cash_flow / f.net_income AS operating_cash_flow_to_net_income FROM financials AS f JOIN companies AS c USING (ticker) WHERE c.ticker = 'KO' AND f.fiscal_year = 2023",
+      "correct": false,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d019",
+      "question": "Which company had the highest net income in 2021?",
+      "expected": [
+        [
+          "AAPL"
+        ]
+      ],
+      "actual": [
+        [
+          "AAPL",
+          "Apple Inc."
+        ]
+      ],
+      "sql": "SELECT c.ticker, c.name FROM companies AS c JOIN financials AS f USING (ticker) WHERE f.fiscal_year = 2021 AND NOT f.net_income IS NULL ORDER BY f.net_income DESC LIMIT 1",
+      "correct": false,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    },
+    {
+      "id": "d020",
+      "question": "How many fiscal years of data do we have for Walmart?",
+      "expected": [
+        [
+          8
+        ]
+      ],
+      "actual": [
+        [
+          8
+        ]
+      ],
+      "sql": "SELECT COUNT(DISTINCT fiscal_year) AS fiscal_years FROM financials WHERE ticker = 'WMT'",
+      "correct": true,
+      "model": "nvidia/nemotron-3.5-super-vl:free"
+    }
+  ]
+}

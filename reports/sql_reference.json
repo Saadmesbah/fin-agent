@@ -1,0 +1,383 @@
+{
+  "timestamp_utc": "2026-11-17T02:35:23.100594+00:00",
+  "mode": "reference_sql_consistency",
+  "total": 20,
+  "passed": 20,
+  "accuracy": 1.0,
+  "questions": [
+    {
+      "id": "d001",
+      "question": "Which company had the highest revenue in fiscal 2023?",
+      "expected": [
+        [
+          "WMT"
+        ]
+      ],
+      "actual": [
+        [
+          "WMT"
+        ]
+      ],
+      "sql": "SELECT ticker FROM financials WHERE fiscal_year = 2023 ORDER BY revenue DESC LIMIT 1",
+      "correct": true
+    },
+    {
+      "id": "d002",
+      "question": "What was Apple's revenue in 2023?",
+      "expected": [
+        [
+          383285000000
+        ]
+      ],
+      "actual": [
+        [
+          383285000000
+        ]
+      ],
+      "sql": "SELECT revenue FROM financials WHERE ticker = 'AAPL' AND fiscal_year = 2023",
+      "correct": true
+    },
+    {
+      "id": "d003",
+      "question": "What was Microsoft's net income in 2022?",
+      "expected": [
+        [
+          72738000000
+        ]
+      ],
+      "actual": [
+        [
+          72738000000
+        ]
+      ],
+      "sql": "SELECT net_income FROM financials WHERE ticker = 'MSFT' AND fiscal_year = 2022",
+      "correct": true
+    },
+    {
+      "id": "d004",
+      "question": "Which company had the highest operating margin in 2023?",
+      "expected": [
+        [
+          "MSFT"
+        ]
+      ],
+      "actual": [
+        [
+          "MSFT"
+        ]
+      ],
+      "sql": "SELECT ticker FROM ratios WHERE fiscal_year = 2023 AND NOT operating_margin IS NULL ORDER BY operating_margin DESC LIMIT 1",
+      "correct": true
+    },
+    {
+      "id": "d005",
+      "question": "Which company had the highest net margin in 2024?",
+      "expected": [
+        [
+          "NVDA"
+        ]
+      ],
+      "actual": [
+        [
+          "NVDA"
+        ]
+      ],
+      "sql": "SELECT ticker FROM ratios WHERE fiscal_year = 2024 ORDER BY net_margin DESC LIMIT 1",
+      "correct": true
+    },
+    {
+      "id": "d006",
+      "question": "Which sector had the highest average net margin in 2023?",
+      "expected": [
+        [
+          "Technology"
+        ]
+      ],
+      "actual": [
+        [
+          "Technology"
+        ]
+      ],
+      "sql": "SELECT c.sector FROM ratios AS r JOIN companies AS c USING (ticker) WHERE r.fiscal_year = 2023 GROUP BY c.sector ORDER BY AVG(r.net_margin) DESC LIMIT 1",
+      "correct": true
+    },
+    {
+      "id": "d007",
+      "question": "How many companies had revenue above 100 billion dollars in 2023?",
+      "expected": [
+        [
+          5
+        ]
+      ],
+      "actual": [
+        [
+          5
+        ]
+      ],
+      "sql": "SELECT COUNT(*) FROM financials WHERE fiscal_year = 2023 AND revenue > 100e9",
+      "correct": true
+    },
+    {
+      "id": "d008",
+      "question": "Which company had the largest total assets in 2024?",
+      "expected": [
+        [
+          "MSFT"
+        ]
+      ],
+      "actual": [
+        [
+          "MSFT"
+        ]
+      ],
+      "sql": "SELECT ticker FROM financials WHERE fiscal_year = 2024 ORDER BY total_assets DESC LIMIT 1",
+      "correct": true
+    },
+    {
+      "id": "d009",
+      "question": "Which company had the smallest total assets in 2023?",
+      "expected": [
+        [
+          "NVDA"
+        ]
+      ],
+      "actual": [
+        [
+          "NVDA"
+        ]
+      ],
+      "sql": "SELECT ticker FROM financials WHERE fiscal_year = 2023 ORDER BY total_assets ASC LIMIT 1",
+      "correct": true
+    },
+    {
+      "id": "d010",
+      "question": "Which company generated the most operating cash flow in 2024?",
+      "expected": [
+        [
+          "MSFT"
+        ]
+      ],
+      "actual": [
+        [
+          "MSFT"
+        ]
+      ],
+      "sql": "SELECT ticker FROM financials WHERE fiscal_year = 2024 ORDER BY operating_cash_flow DESC LIMIT 1",
+      "correct": true
+    },
+    {
+      "id": "d011",
+      "question": "What was Apple's revenue growth from 2023 to 2024, in percent?",
+      "expected": [
+        [
+          2.0
+        ]
+      ],
+      "actual": [
+        [
+          2.0
+        ]
+      ],
+      "sql": "SELECT ROUND((b.revenue / a.revenue - 1) * 100, 1) FROM financials AS a JOIN financials AS b ON a.ticker = b.ticker AND b.fiscal_year = a.fiscal_year + 1 WHERE a.ticker = 'AAPL' AND a.fiscal_year = 2023",
+      "correct": true
+    },
+    {
+      "id": "d012",
+      "question": "Which company had the highest revenue growth from 2022 to 2023, in percent?",
+      "expected": [
+        [
+          "CAT"
+        ]
+      ],
+      "actual": [
+        [
+          "CAT"
+        ]
+      ],
+      "sql": "SELECT a.ticker FROM financials AS a JOIN financials AS b ON a.ticker = b.ticker AND b.fiscal_year = a.fiscal_year + 1 WHERE a.fiscal_year = 2022 ORDER BY b.revenue / a.revenue DESC LIMIT 1",
+      "correct": true
+    },
+    {
+      "id": "d013",
+      "question": "Which companies had lower net income in 2023 than in 2022?",
+      "expected": [
+        [
+          "AAPL"
+        ],
+        [
+          "CVX"
+        ],
+        [
+          "HD"
+        ],
+        [
+          "MSFT"
+        ],
+        [
+          "NVDA"
+        ],
+        [
+          "PFE"
+        ],
+        [
+          "PG"
+        ],
+        [
+          "WMT"
+        ]
+      ],
+      "actual": [
+        [
+          "AAPL"
+        ],
+        [
+          "CVX"
+        ],
+        [
+          "HD"
+        ],
+        [
+          "MSFT"
+        ],
+        [
+          "NVDA"
+        ],
+        [
+          "PFE"
+        ],
+        [
+          "PG"
+        ],
+        [
+          "WMT"
+        ]
+      ],
+      "sql": "SELECT a.ticker FROM financials AS a JOIN financials AS b ON a.ticker = b.ticker AND b.fiscal_year = a.fiscal_year + 1 WHERE a.fiscal_year = 2022 AND b.net_income < a.net_income ORDER BY a.ticker",
+      "correct": true
+    },
+    {
+      "id": "d014",
+      "question": "What was the total revenue of the Technology sector in 2023?",
+      "expected": [
+        [
+          622174000000
+        ]
+      ],
+      "actual": [
+        [
+          622174000000
+        ]
+      ],
+      "sql": "SELECT SUM(f.revenue) FROM financials AS f JOIN companies AS c USING (ticker) WHERE c.sector = 'Technology' AND f.fiscal_year = 2023",
+      "correct": true
+    },
+    {
+      "id": "d015",
+      "question": "What was the average revenue of Healthcare companies in 2022?",
+      "expected": [
+        [
+          90582500000.0
+        ]
+      ],
+      "actual": [
+        [
+          90582500000.0
+        ]
+      ],
+      "sql": "SELECT AVG(f.revenue) FROM financials AS f JOIN companies AS c USING (ticker) WHERE c.sector = 'Healthcare' AND f.fiscal_year = 2022",
+      "correct": true
+    },
+    {
+      "id": "d016",
+      "question": "Which companies have no operating income values in this dataset?",
+      "expected": [
+        [
+          "CVX"
+        ],
+        [
+          "JNJ"
+        ],
+        [
+          "PFE"
+        ]
+      ],
+      "actual": [
+        [
+          "CVX"
+        ],
+        [
+          "JNJ"
+        ],
+        [
+          "PFE"
+        ]
+      ],
+      "sql": "SELECT ticker FROM financials GROUP BY ticker HAVING COUNT(operating_income) = 0 ORDER BY ticker",
+      "correct": true
+    },
+    {
+      "id": "d017",
+      "question": "What was Johnson & Johnson's pretax margin in 2023, in percent?",
+      "expected": [
+        [
+          17.7
+        ]
+      ],
+      "actual": [
+        [
+          17.7
+        ]
+      ],
+      "sql": "SELECT ROUND(pretax_margin * 100, 1) FROM ratios WHERE ticker = 'JNJ' AND fiscal_year = 2023",
+      "correct": true
+    },
+    {
+      "id": "d018",
+      "question": "What was Coca-Cola's ratio of operating cash flow to net income in 2023?",
+      "expected": [
+        [
+          1.08
+        ]
+      ],
+      "actual": [
+        [
+          1.08
+        ]
+      ],
+      "sql": "SELECT ROUND(operating_cash_flow / net_income, 2) FROM financials WHERE ticker = 'KO' AND fiscal_year = 2023",
+      "correct": true
+    },
+    {
+      "id": "d019",
+      "question": "Which company had the highest net income in 2021?",
+      "expected": [
+        [
+          "AAPL"
+        ]
+      ],
+      "actual": [
+        [
+          "AAPL"
+        ]
+      ],
+      "sql": "SELECT ticker FROM financials WHERE fiscal_year = 2021 ORDER BY net_income DESC LIMIT 1",
+      "correct": true
+    },
+    {
+      "id": "d020",
+      "question": "How many fiscal years of data do we have for Walmart?",
+      "expected": [
+        [
+          8
+        ]
+      ],
+      "actual": [
+        [
+          8
+        ]
+      ],
+      "sql": "SELECT COUNT(*) FROM financials WHERE ticker = 'WMT'",
+      "correct": true
+    }
+  ]
+}

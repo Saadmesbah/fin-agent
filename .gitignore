@@ -9,6 +9,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
+.coverage
+ci-results/
+reports/tests.xml
 
 # Data directories and datasets
 data/
